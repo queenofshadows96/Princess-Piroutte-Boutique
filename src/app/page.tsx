@@ -1,7 +1,7 @@
-import { Navbar } from '@/components/Navbar'
-import { HeroSection } from '@/components/HeroSection'
-import { ValuesSection } from '@/components/ValuesSection'
-import { FloatingStars } from '@/components/FloatingStars'
+import Navbar from '../components/Navbar'
+import { HeroSection } from '../components/HeroSection'
+import { ValuesSection } from '../components/ValuesSection'
+import { FloatingStars } from '../components/FloatingStars'
 
 export default function Home() {
   return (

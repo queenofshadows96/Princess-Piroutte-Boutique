@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Great_Vibes, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
-import NavBar from "@/components/NavBar";
+import Navbar from "@/components/Navbar";
 import FloatingBackground from "@/components/FloatingBackground";
 
 const greatVibes = Great_Vibes({
@@ -33,7 +33,7 @@ export default function RootLayout({
       <body className={`${greatVibes.variable} ${playfairDisplay.variable} min-h-screen antialiased`}>
         <CartProvider>
           <FloatingBackground />
-          <NavBar />
+          <Navbar />
           {children}
         </CartProvider>
       </body>
