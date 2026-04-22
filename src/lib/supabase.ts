@@ -11,14 +11,14 @@ export const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Types for Supabase database
 export interface Product {
-  id: string;
+  id: number;
   name: string;
   description: string;
   price: number;
-  image_url: string;
+  image_url: string | null;
   category: string;
-  sizes: string[];
-  colors: string[];
+  size: string;
+  stock: number;
   created_at: string;
 }
 

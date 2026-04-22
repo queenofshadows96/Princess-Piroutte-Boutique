@@ -5,70 +5,79 @@ import CrownIcon from "./CrownIcon";
 
 const values = [
   {
-    title: "Passion for Dance",
-    description: "Every piece is crafted with love for ballet and the joy it brings to young dancers.",
+    title: "Ballet & Beyond",
+    description:
+      "Ballet is more than movement — it builds grace, confidence, and character that lasts a lifetime.",
   },
   {
-    title: "Quality & Comfort",
-    description: "Premium materials and expert tailoring ensure comfort during every pirouette.",
+    title: "Wearable Art",
+    description:
+      "Each garment is a handcrafted masterpiece, blending premium fabrics with timeless elegance.",
   },
   {
-    title: "Magical Experience",
-    description: "Transform your little one into a princess ballerina with our enchanting collection.",
+    title: "Every Princess",
+    description:
+      "Every child deserves to feel like royalty. Our collection celebrates all sizes, styles, and dreams.",
   },
 ];
 
 export function ValuesSection() {
   return (
-    <section className="py-20 px-4" style={{ backgroundColor: "#FFF5F7" }}>
+    <section className="py-24 px-6" style={{ backgroundColor: "#FFF5F7" }}>
       <div className="max-w-6xl mx-auto">
+        {/* Section heading */}
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl md:text-5xl font-magnolia text-center mb-16"
-          style={{ color: "#D4AF37" }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="font-magnolia text-center mb-28"
+          style={{
+            color: "#D4AF37",
+            fontSize: "clamp(2.5rem, 6vw, 4rem)",
+          }}
         >
-          Our Values
+          Where Magic Lives
         </motion.h2>
-        <div className="grid md:grid-cols-3 gap-8">
+
+        {/* Cards grid */}
+        <div className="grid md:grid-cols-3 gap-10">
           {values.map((value, index) => (
             <motion.div
               key={value.title}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="text-center flex flex-col items-center"
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: index * 0.18 }}
+              className="value-card"
+              style={{ paddingLeft: "28px", paddingRight: "28px", paddingBottom: "44px" }}
             >
-              {/* Arched card with border */}
+              {/* Crown badge sitting at the top of the arch */}
               <div
-                className="w-full pt-16 pb-8 px-6 rounded-t-3xl border-2 border-b-0 bg-white relative"
+                className="absolute -top-9 left-1/2 -translate-x-1/2 z-10 flex items-center justify-center rounded-full border-2 bg-white"
                 style={{
                   borderColor: "#B8860B",
+                  width: "64px",
+                  height: "64px",
+                  boxShadow: "0 4px 16px rgba(184,134,11,0.18)",
                 }}
               >
-                {/* Crown icon on top */}
-                <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-white rounded-full p-3 border-2" 
-                  style={{ borderColor: "#B8860B" }}>
-                  <CrownIcon width={32} height={32} color="#D4AF37" />
-                </div>
-
-                <h3 className="text-2xl font-playfair italic font-bold mb-4" style={{ color: "#B8860B" }}>
-                  {value.title}
-                </h3>
-                <p className="font-playfair" style={{ color: "#C09090" }}>
-                  {value.description}
-                </p>
+                <CrownIcon width={34} height={34} color="#D4AF37" />
               </div>
 
-              {/* Arch bottom - curved continuation */}
-              <div
-                className="w-full h-8 rounded-b-3xl border-2 border-t-0"
-                style={{
-                  borderColor: "#B8860B",
-                  backgroundColor: "white",
-                }}
-              />
+              <h3
+                className="font-playfair italic font-bold text-center mb-4 mt-4"
+                style={{ color: "#B8860B", fontSize: "1.4rem" }}
+              >
+                {value.title}
+              </h3>
+
+              <p
+                className="font-playfair text-center leading-relaxed"
+                style={{ color: "#C09090", fontSize: "1rem" }}
+              >
+                {value.description}
+              </p>
             </motion.div>
           ))}
         </div>

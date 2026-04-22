@@ -1,12 +1,6 @@
 "use client";
 
-import { Metadata } from "next";
 import CrownIcon from "@/components/CrownIcon";
-
-export const metadata: Metadata = {
-  title: "Our Values | Princess Pirouette Boutique",
-  description: "Learn about the values that drive Princess Pirouette.",
-};
 
 const valuesList = [
   {

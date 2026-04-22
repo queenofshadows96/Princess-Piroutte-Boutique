@@ -1,12 +1,5 @@
 "use client";
 
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Sizing Guide | Princess Pirouette Boutique",
-  description: "Find the perfect size for your little dancer.",
-};
-
 export default function SizingGuidePage() {
   return (
     <main style={{ backgroundColor: "#FFF5F7", minHeight: "100vh", paddingTop: "100px" }}>
