@@ -1,3 +1,5 @@
+"use client";
+
 import { Metadata } from "next";
 import CrownIcon from "@/components/CrownIcon";
 
