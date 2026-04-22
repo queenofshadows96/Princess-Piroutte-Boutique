@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Great_Vibes, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
@@ -18,10 +17,6 @@ const playfairDisplay = Playfair_Display({
   variable: "--font-playfair",
 });
 
-export const metadata: Metadata = {
-  title: "Princess Pirouette Boutique",
-  description: "Magical and Sustainable Apparel for your Inner Little Princess",
-};
 
 export default function RootLayout({
   children,

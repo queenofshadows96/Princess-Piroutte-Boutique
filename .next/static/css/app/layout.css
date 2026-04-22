@@ -944,6 +944,12 @@ video {
 .h-full {
   height: 100%;
 }
+.h-10 {
+  height: 2.5rem;
+}
+.h-20 {
+  height: 5rem;
+}
 .min-h-\[90vh\] {
   min-height: 90vh;
 }
@@ -955,6 +961,12 @@ video {
 }
 .w-28 {
   width: 7rem;
+}
+.w-24 {
+  width: 6rem;
+}
+.w-32 {
+  width: 8rem;
 }
 .max-w-2xl {
   max-width: 42rem;
@@ -1104,6 +1116,9 @@ video {
 .border-t-2 {
   border-top-width: 2px;
 }
+.border-t {
+  border-top-width: 1px;
+}
 .border-border {
   border-color: hsl(var(--border));
 }
@@ -1199,6 +1214,10 @@ video {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
 .pb-4 {
   padding-bottom: 1rem;
 }
@@ -1210,6 +1229,9 @@ video {
 }
 .pt-2 {
   padding-top: 0.5rem;
+}
+.pt-3 {
+  padding-top: 0.75rem;
 }
 .text-left {
   text-align: left;
@@ -1261,6 +1283,10 @@ video {
   font-size: 0.75rem;
   line-height: 1rem;
 }
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
 .font-bold {
   font-weight: 700;
 }
@@ -1300,6 +1326,9 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+.underline {
+  text-decoration-line: underline;
 }
 .underline-offset-4 {
   text-underline-offset: 4px;
@@ -1359,6 +1388,9 @@ video {
 .duration-500 {
   transition-duration: 500ms;
 }
+.duration-150 {
+  transition-duration: 150ms;
+}
 @keyframes enter {
 
   from {
@@ -1381,6 +1413,9 @@ video {
 }
 .duration-500 {
   animation-duration: 500ms;
+}
+.duration-150 {
+  animation-duration: 150ms;
 }
 body {
   background-color: #FFF5F7;
@@ -1464,6 +1499,12 @@ body {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.focus\:ring-2:focus {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
 .focus-visible\:border-destructive\/40:focus-visible {
   border-color: hsl(var(--destructive) / 0.4);
 }
@@ -1482,6 +1523,10 @@ body {
 
 .disabled\:pointer-events-none:disabled {
   pointer-events: none;
+}
+
+.disabled\:cursor-not-allowed:disabled {
+  cursor: not-allowed;
 }
 
 .disabled\:opacity-50:disabled {

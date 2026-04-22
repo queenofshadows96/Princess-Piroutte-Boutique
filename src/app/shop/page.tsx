@@ -26,12 +26,18 @@ function ProductCard({ product }: { product: Product }) {
   const { addToCart } = useCart();
   const [added, setAdded] = useState(false);
 
+  const sizes = product.size
+    ? product.size.split(",").map((s) => s.trim()).filter(Boolean)
+    : [];
+
+  const [selectedSize, setSelectedSize] = useState<string>(sizes[0] ?? "");
+
   const handleAddToCart = () => {
     addToCart({
       id: String(product.id),
       name: product.name,
       price: product.price,
-      size: product.size?.split(",")?.[0]?.trim() ?? "One Size",
+      size: selectedSize || "One Size",
       image_url: product.image_url ?? undefined,
     });
     setAdded(true);
@@ -77,9 +83,31 @@ function ProductCard({ product }: { product: Product }) {
           </p>
         )}
 
-        <p className="text-sm font-playfair mb-4 flex-1 line-clamp-2" style={{ color: "#C09090" }}>
+        <p className="text-sm font-playfair mb-3 flex-1 line-clamp-2" style={{ color: "#C09090" }}>
           {product.description}
         </p>
+
+        {/* Size selector */}
+        {sizes.length > 0 && (
+          <div className="mb-4">
+            <div className="flex flex-wrap gap-1">
+              {sizes.map((size) => (
+                <button
+                  key={size}
+                  onClick={() => setSelectedSize(size)}
+                  className="px-2 py-1 rounded border font-playfair italic text-xs font-semibold transition-all duration-150"
+                  style={{
+                    borderColor: "#B8860B",
+                    backgroundColor: selectedSize === size ? "#B8860B" : "white",
+                    color: selectedSize === size ? "white" : "#B8860B",
+                  }}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="flex justify-between items-center mt-auto">
           <span className="text-lg font-playfair italic font-bold" style={{ color: "#D4AF37" }}>

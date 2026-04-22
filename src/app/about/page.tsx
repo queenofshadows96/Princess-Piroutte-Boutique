@@ -1,10 +1,4 @@
-import { Metadata } from "next";
 import { motion } from "framer-motion";
-
-export const metadata: Metadata = {
-  title: "About | Princess Pirouette Boutique",
-  description: "Learn about our mission and story.",
-};
 
 export default function AboutPage() {
   return (

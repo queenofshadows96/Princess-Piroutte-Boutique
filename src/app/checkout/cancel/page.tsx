@@ -1,12 +1,6 @@
 "use client";
 
-import { Metadata } from "next";
 import Link from "next/link";
-
-export const metadata: Metadata = {
-  title: "Order Cancelled | Princess Pirouette Boutique",
-  description: "Your order has been cancelled.",
-};
 
 export default function CheckoutCancelPage() {
   return (
