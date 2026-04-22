@@ -1,35 +1,33 @@
-"use client"
+"use client";
 
-import { motion } from 'framer-motion'
-import { Heart, Star, Crown } from 'lucide-react'
+import { motion } from "framer-motion";
+import CrownIcon from "./CrownIcon";
 
 const values = [
   {
-    icon: Heart,
-    title: 'Passion for Dance',
-    description: 'Every piece is crafted with love for ballet and the joy it brings to young dancers.'
+    title: "Passion for Dance",
+    description: "Every piece is crafted with love for ballet and the joy it brings to young dancers.",
   },
   {
-    icon: Star,
-    title: 'Quality & Comfort',
-    description: 'Premium materials and expert tailoring ensure comfort during every pirouette.'
+    title: "Quality & Comfort",
+    description: "Premium materials and expert tailoring ensure comfort during every pirouette.",
   },
   {
-    icon: Crown,
-    title: 'Magical Experience',
-    description: 'Transform your little one into a princess ballerina with our enchanting collection.'
-  }
-]
+    title: "Magical Experience",
+    description: "Transform your little one into a princess ballerina with our enchanting collection.",
+  },
+];
 
 export function ValuesSection() {
   return (
-    <section className="py-20 px-4 bg-white">
+    <section className="py-20 px-4" style={{ backgroundColor: "#FFF5F7" }}>
       <div className="max-w-6xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-4xl md:text-5xl font-great-vibes text-gold-600 text-center mb-16"
+          className="text-4xl md:text-5xl font-magnolia text-center mb-16"
+          style={{ color: "#D4AF37" }}
         >
           Our Values
         </motion.h2>
@@ -40,23 +38,41 @@ export function ValuesSection() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="text-center"
+              className="text-center flex flex-col items-center"
             >
-              <div className="bg-pink-100 rounded-t-full pt-12 pb-8 px-6 relative">
-                <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-gold-600 rounded-full p-4">
-                  <value.icon className="w-8 h-8 text-white" />
+              {/* Arched card with border */}
+              <div
+                className="w-full pt-16 pb-8 px-6 rounded-t-3xl border-2 border-b-0 bg-white relative"
+                style={{
+                  borderColor: "#B8860B",
+                }}
+              >
+                {/* Crown icon on top */}
+                <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-white rounded-full p-3 border-2" 
+                  style={{ borderColor: "#B8860B" }}>
+                  <CrownIcon width={32} height={32} color="#D4AF37" />
                 </div>
-                <h3 className="text-2xl font-playfair font-bold text-gray-800 mb-4">
+
+                <h3 className="text-2xl font-playfair italic font-bold mb-4" style={{ color: "#B8860B" }}>
                   {value.title}
                 </h3>
-                <p className="text-gray-600 font-playfair">
+                <p className="font-playfair" style={{ color: "#C09090" }}>
                   {value.description}
                 </p>
               </div>
+
+              {/* Arch bottom - curved continuation */}
+              <div
+                className="w-full h-8 rounded-b-3xl border-2 border-t-0"
+                style={{
+                  borderColor: "#B8860B",
+                  backgroundColor: "white",
+                }}
+              />
             </motion.div>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }

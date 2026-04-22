@@ -50,9 +50,21 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Princess Pirouette custom colors
+        gold: {
+          light: "#D4AF37",
+          dark: "#B8860B",
+        },
+        pink: {
+          accent: "#FFD1DC",
+          background: "#FFF5F7",
+        },
+        body: "#C09090",
       },
       fontFamily: {
         sans: ['system-ui', 'sans-serif'],
+        magnolia: ['var(--font-great-vibes)'],
+        playfair: ['var(--font-playfair)'],
       },
       borderRadius: {
         lg: "var(--radius)",

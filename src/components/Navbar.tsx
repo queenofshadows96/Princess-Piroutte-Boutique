@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Great_Vibes, Playfair_Display } from "next/font/google";
 import { ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import CrownIcon from "./CrownIcon";
 
 const magnolia = Great_Vibes({ subsets: ["latin"], weight: ["400"] });
 const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400"], style: ["italic"] });
@@ -34,10 +35,11 @@ export default function Navbar() {
     >
       <Link
         href="/"
-        className={`${magnolia.className} text-xl font-bold shrink-0 whitespace-nowrap`}
+        className={`${magnolia.className} text-xl font-bold shrink-0 whitespace-nowrap flex items-center gap-2`}
         style={{ color: "#D4AF37" }}
       >
-        👑 Princess Pirouette Boutique
+        <CrownIcon width={20} height={20} color="#D4AF37" />
+        Princess Pirouette Boutique
       </Link>
 
       <div className="flex items-center gap-8 shrink-0">
