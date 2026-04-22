@@ -29,16 +29,23 @@ export default function ContactPage() {
     setLoading(true);
 
     try {
-      // EmailJS integration will go here
-      // For now, just simulate submission
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-      console.log("Form submitted:", formData);
-      setSubmitted(true);
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      if (response.ok) {
+        setSubmitted(true);
+        setFormData({ name: "", email: "", subject: "", message: "" });
 
-      // Reset success message after 5 seconds
-      setTimeout(() => setSubmitted(false), 5000);
+        // Reset success message after 5 seconds
+        setTimeout(() => setSubmitted(false), 5000);
+      } else {
+        console.error("Failed to send email");
+      }
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {
