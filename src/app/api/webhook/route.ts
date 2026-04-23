@@ -2,68 +2,54 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
 
-export const runtime = "nodejs";
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2023-08-16",
-});
-
-// Service role key bypasses RLS for server-side inserts
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-export async function POST(request: NextRequest) {
-  const body = await request.text();
-  const signature = request.headers.get("stripe-signature");
+export async function POST(req: NextRequest) {
+  const body = await req.text();
+  const signature = req.headers.get("stripe-signature")!;
 
-  if (!signature) {
-    return NextResponse.json(
-      { error: "Missing stripe-signature header" },
-      { status: 400 }
-    );
-  }
+  let event;
 
-  let event: Stripe.Event;
   try {
     event = stripe.webhooks.constructEvent(
       body,
       signature,
       process.env.STRIPE_WEBHOOK_SECRET!
     );
-  } catch (err) {
-    console.error("Webhook signature verification failed:", err);
-    return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
+  } catch (error) {
+    console.error("Webhook signature error:", error);
+    return NextResponse.json({ error: "Webhook failed" }, { status: 400 });
   }
 
   if (event.type === "checkout.session.completed") {
-    const session = event.data.object as Stripe.Checkout.Session;
+    try {
+      const session = event.data.object as Stripe.Checkout.Session;
 
-    const customerEmail =
-      session.customer_details?.email ?? session.customer_email ?? "";
-    const customerName = session.customer_details?.name ?? "";
-    const rawAddress =
-      session.shipping_details?.address ?? session.customer_details?.address;
-    const shippingAddress = rawAddress ? JSON.stringify(rawAddress) : null;
-    const total = (session.amount_total ?? 0) / 100;
-    const stripePaymentId =
-      typeof session.payment_intent === "string"
-        ? session.payment_intent
-        : (session.payment_intent?.id ?? "");
+      const { error: insertError } = await supabase.from("orders").insert({
+        customer_email: session.customer_email,
+        customer_name: session.customer_details?.name ?? null,
+        shipping_address: session.customer_details?.address
+          ? JSON.stringify(session.customer_details.address)
+          : null,
+        total: session.amount_total ? session.amount_total / 100 : 0,
+        status: "paid",
+        stripe_payment_id: session.payment_intent
+          ? String(session.payment_intent)
+          : null,
+      });
 
-    const { error } = await supabase.from("orders").insert({
-      customer_email: customerEmail,
-      customer_name: customerName,
-      shipping_address: shippingAddress,
-      total,
-      status: "paid",
-      stripe_payment_id: stripePaymentId,
-    });
-
-    if (error) {
-      console.error("Supabase order insert error:", error);
-      return NextResponse.json({ error: "Failed to save order" }, { status: 500 });
+      if (insertError) {
+        console.error("Supabase insert error:", insertError);
+        return NextResponse.json({ error: "Order save failed" }, { status: 500 });
+      }
+    } catch (err) {
+      console.error("Order save error:", err);
+      return NextResponse.json({ error: "Order save failed" }, { status: 500 });
     }
   }
 

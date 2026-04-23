@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { Great_Vibes, Playfair_Display } from "next/font/google";
 import { ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/CartContext";
-import CrownIcon from "./CrownIcon";
 
 const magnolia = Great_Vibes({ subsets: ["latin"], weight: ["400"] });
 const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400"], style: ["italic"] });
@@ -20,7 +19,7 @@ const links = [
   { href: "/contact", label: "Contact" },
 ];
 
-export default function Navbar() {
+export default function NavBar() {
   const pathname = usePathname();
   const { totalItems } = useCart();
 
@@ -35,10 +34,9 @@ export default function Navbar() {
     >
       <Link
         href="/"
-        className={`${magnolia.className} text-xl font-bold shrink-0 whitespace-nowrap flex items-center gap-2`}
+        className={`${magnolia.className} text-xl font-bold shrink-0 whitespace-nowrap`}
         style={{ color: "#D4AF37" }}
       >
-        <CrownIcon width={20} height={20} color="#D4AF37" />
         Princess Pirouette Boutique
       </Link>
 
@@ -65,7 +63,6 @@ export default function Navbar() {
           href="/checkout"
           className="relative flex items-center transition-colors duration-200"
           style={{ color: "#B8860B" }}
-          aria-label={`Cart — ${totalItems} item${totalItems !== 1 ? "s" : ""}`}
         >
           <ShoppingBag size={22} strokeWidth={1.8} />
           {totalItems > 0 && (

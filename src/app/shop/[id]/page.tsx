@@ -1,17 +1,37 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { supabase, type Product } from "@/lib/supabase";
+import { useState, useEffect, use } from "react";
+import { motion } from "framer-motion";
+import { Great_Vibes, Playfair_Display } from "next/font/google";
 import { useCart } from "@/context/CartContext";
+import { createClient } from "@supabase/supabase-js";
+import Link from "next/link";
 
-export default function ProductPage({ params }: { params: { id: string } }) {
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
+
+const magnolia = Great_Vibes({ subsets: ["latin"], weight: ["400"] });
+const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400", "700"], style: ["italic"] });
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  description: string;
+  image_url: string;
+  stock: number;
+  size: string;
+  category: string;
+}
+
+export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
   const { addToCart } = useCart();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
-  const [selectedSize, setSelectedSize] = useState<string>("");
+  const [selectedSize, setSelectedSize] = useState("");
   const [added, setAdded] = useState(false);
 
   useEffect(() => {
@@ -19,200 +39,176 @@ export default function ProductPage({ params }: { params: { id: string } }) {
       const { data, error } = await supabase
         .from("products")
         .select("*")
-        .eq("id", params.id)
+        .eq("id", id)
         .single();
-
-      if (error || !data) {
-        setNotFound(true);
-      } else {
-        setProduct(data);
-        const sizes = data.size
-          ? data.size.split(",").map((s: string) => s.trim()).filter(Boolean)
-          : [];
-        if (sizes.length > 0) setSelectedSize(sizes[0]);
-      }
+      if (!error && data) setProduct(data);
       setLoading(false);
     }
     fetchProduct();
-  }, [params.id]);
+  }, [id]);
 
   const handleAddToCart = () => {
     if (!product) return;
+    if (!selectedSize) {
+      alert("Please select a size first!");
+      return;
+    }
     addToCart({
-      id: String(product.id),
+      id: product.id,
       name: product.name,
       price: product.price,
-      size: selectedSize || "One Size",
-      image_url: product.image_url ?? undefined,
+      size: selectedSize,
+      emoji: "🩰",
+      gradient: "from-[#FFD1DC] to-[#E8B4C8]",
     });
     setAdded(true);
     setTimeout(() => setAdded(false), 1600);
   };
 
-  const sizes = product?.size
-    ? product.size.split(",").map((s) => s.trim()).filter(Boolean)
-    : [];
-
   if (loading) {
     return (
-      <main style={{ backgroundColor: "#FFF5F7", minHeight: "100vh", paddingTop: "100px" }}>
-        <div className="max-w-4xl mx-auto px-4 py-12 animate-pulse">
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="rounded-lg" style={{ backgroundColor: "#FFD1DC", height: "500px" }} />
-            <div className="space-y-4">
-              <div className="h-10 rounded" style={{ backgroundColor: "#FFD1DC", width: "70%" }} />
-              <div className="h-6 rounded" style={{ backgroundColor: "#FFD1DC", width: "30%" }} />
-              <div className="h-20 rounded" style={{ backgroundColor: "#FFD1DC" }} />
-            </div>
-          </div>
-        </div>
+      <main className="relative z-10 py-20 px-6 min-h-screen flex items-center justify-center">
+        <p className={`${magnolia.className} text-2xl`} style={{ color: "#D4AF37" }}>
+          Loading magic...
+        </p>
       </main>
     );
   }
 
-  if (notFound || !product) {
+  if (!product) {
     return (
-      <main style={{ backgroundColor: "#FFF5F7", minHeight: "100vh", paddingTop: "100px" }}>
-        <div className="max-w-4xl mx-auto px-4 py-12 text-center">
-          <p className="font-playfair italic text-xl mb-4" style={{ color: "#B8860B" }}>
+      <main className="relative z-10 py-20 px-6 min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className={`${magnolia.className} text-2xl mb-4`} style={{ color: "#D4AF37" }}>
             Product not found
           </p>
-          <Link href="/shop" className="font-playfair italic underline" style={{ color: "#D4AF37" }}>
-            Back to Shop
+          <Link href="/shop">
+            <button
+              className="px-8 py-3 rounded-full font-bold transition-all hover:-translate-y-1"
+              style={{ backgroundColor: "#FFD1DC", color: "#D4AF37", border: "2px solid #B8860B" }}
+            >
+              Back to Shop
+            </button>
           </Link>
         </div>
       </main>
     );
   }
 
-  return (
-    <main style={{ backgroundColor: "#FFF5F7", minHeight: "100vh", paddingTop: "100px" }}>
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        <Link
-          href="/shop"
-          className="inline-block mb-8 font-playfair italic text-sm underline"
-          style={{ color: "#B8860B" }}
-        >
-          ← Back to Shop
-        </Link>
+  const sizes = product.size.split(",");
 
-        <div className="grid md:grid-cols-2 gap-12">
-          {/* Product Image */}
-          <div
-            className="rounded-lg overflow-hidden border-2 relative"
-            style={{ borderColor: "#B8860B", height: "500px" }}
+  return (
+    <main className="relative z-10 py-20 px-6 min-h-screen">
+      <div className="max-w-5xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-8"
+        >
+          <Link href="/shop">
+            <button
+              className="px-6 py-2 rounded-full text-sm font-bold transition-all hover:-translate-y-1"
+              style={{ backgroundColor: "#FFD1DC", color: "#D4AF37", border: "2px solid #B8860B" }}
+            >
+              Back to Shop
+            </button>
+          </Link>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7 }}
+            className="rounded-3xl overflow-hidden"
+            style={{ border: "2px solid #B8860B" }}
           >
             {product.image_url && product.image_url !== "placeholder" ? (
-              <Image
-                src={product.image_url}
-                alt={product.name}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
+              <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" />
             ) : (
-              <div
-                className="w-full h-full flex items-center justify-center"
-                style={{ backgroundColor: "#FFD1DC" }}
-              >
-                <span
-                  className="font-magnolia text-2xl"
-                  style={{ color: "#B8860B", opacity: 0.5 }}
-                >
-                  Princess Pirouette
-                </span>
+              <div className="h-96 flex items-center justify-center bg-gradient-to-br from-[#FFD1DC] to-[#E8B4C8]">
+                <span className="text-9xl">🩰</span>
               </div>
             )}
-          </div>
+          </motion.div>
 
-          {/* Product Details */}
-          <div>
-            {product.category && (
-              <p
-                className="text-xs font-playfair uppercase tracking-widest mb-2"
-                style={{ color: "#D4AF37" }}
-              >
-                {product.category}
-              </p>
-            )}
-
-            <h1
-              className="text-4xl font-magnolia mb-4"
-              style={{ color: "#D4AF37" }}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7 }}
+            className="space-y-6"
+          >
+            <span
+              className="text-xs font-bold px-4 py-1 rounded-full"
+              style={{ backgroundColor: "#FFD1DC", color: "#B8860B", border: "1px solid #B8860B" }}
             >
+              {product.category}
+            </span>
+
+            <h1 className={`${magnolia.className} text-4xl md:text-5xl`} style={{ color: "#D4AF37" }}>
               {product.name}
             </h1>
 
-            <p
-              className="text-2xl font-playfair italic font-bold mb-6"
-              style={{ color: "#D4AF37" }}
-            >
-              ${Number(product.price).toFixed(2)}
+            <p className={`${magnolia.className} text-3xl`} style={{ color: "#B8860B" }}>
+              ${product.price}
             </p>
 
-            <p className="text-lg mb-8" style={{ color: "#C09090" }}>
-              {product.description}
-            </p>
-
-            {/* Size selector */}
-            {sizes.length > 0 && (
-              <div className="mb-6">
-                <label
-                  className="block font-playfair italic mb-3"
-                  style={{ color: "#B8860B" }}
-                >
-                  Size
-                </label>
-                <div className="flex flex-wrap gap-2">
-                  {sizes.map((size) => (
-                    <button
-                      key={size}
-                      onClick={() => setSelectedSize(size)}
-                      className="px-4 py-2 rounded border-2 font-playfair italic text-sm font-semibold transition-all duration-150"
-                      style={{
-                        borderColor: "#B8860B",
-                        backgroundColor: selectedSize === size ? "#B8860B" : "white",
-                        color: selectedSize === size ? "white" : "#B8860B",
-                      }}
-                    >
-                      {size}
-                    </button>
-                  ))}
-                </div>
+            <div>
+              <p className={`${playfair.className} italic font-bold mb-3`} style={{ color: "#D4AF37" }}>
+                Select Size
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {sizes.map((size) => (
+                  <button
+                    key={size}
+                    onClick={() => setSelectedSize(size)}
+                    className="px-4 py-2 rounded-full text-sm font-bold transition-all hover:-translate-y-1"
+                    style={{
+                      backgroundColor: selectedSize === size ? "#D4AF37" : "#FFD1DC",
+                      color: selectedSize === size ? "#fff" : "#8B4565",
+                      border: "1px solid #B8860B",
+                    }}
+                  >
+                    {size}
+                  </button>
+                ))}
               </div>
-            )}
+              <Link href="/sizing-guide">
+                <p className="text-xs mt-2 underline cursor-pointer" style={{ color: "#C09090" }}>
+                  View Sizing Guide
+                </p>
+              </Link>
+            </div>
 
-            {/* Add to cart */}
             <button
               onClick={handleAddToCart}
-              className="w-full py-3 rounded-lg font-playfair italic font-bold text-white transition-all mb-4"
-              style={{ backgroundColor: added ? "#B8860B" : "#D4AF37" }}
-              onMouseEnter={(e) => {
-                if (!added) e.currentTarget.style.backgroundColor = "#B8860B";
-              }}
-              onMouseLeave={(e) => {
-                if (!added) e.currentTarget.style.backgroundColor = "#D4AF37";
+              disabled={added}
+              className="w-full py-4 rounded-full font-bold text-lg transition-all hover:-translate-y-1 hover:shadow-xl"
+              style={{
+                backgroundColor: added ? "#D4AF37" : "#FFD1DC",
+                color: added ? "#fff" : "#8B4565",
+                border: "2px solid #B8860B",
               }}
             >
-              {added ? "Added to Cart!" : "Add to Cart"}
+              {added ? "Added to Cart ✓" : "Add to Cart"}
             </button>
 
-            {/* Product details */}
-            <div className="border-t-2 pt-6" style={{ borderColor: "#FFD1DC" }}>
-              <h3
-                className="font-playfair italic font-bold mb-4"
-                style={{ color: "#B8860B" }}
+            <div
+              className="p-6 rounded-3xl"
+              style={{ backgroundColor: "rgba(255, 255, 255, 0.92)", border: "2px solid #B8860B" }}
+            >
+              <h2
+                className={`${playfair.className} italic text-xl font-bold mb-4`}
+                style={{ color: "#D4AF37" }}
               >
-                Product Details
-              </h3>
-              <ul style={{ color: "#C09090" }}>
-                <li className="mb-2">• Premium ballet-quality material</li>
-                <li className="mb-2">• Sustainable and eco-friendly</li>
-                <li className="mb-2">• Perfect fit and comfort</li>
-                <li className="mb-2">• Available in multiple colors</li>
-              </ul>
+                About This Piece
+              </h2>
+              <p className="text-sm leading-loose whitespace-pre-line" style={{ color: "#C09090" }}>
+                {product.description}
+              </p>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </main>

@@ -1,104 +1,97 @@
 "use client";
 
-import CrownIcon from "@/components/CrownIcon";
+import { motion } from "framer-motion";
+import { Great_Vibes, Playfair_Display } from "next/font/google";
 
-const valuesList = [
-  {
-    title: "Passion for Dance",
-    description:
-      "Every piece is crafted with love for ballet and the joy it brings to young dancers. We celebrate the artistry, dedication, and magic of dance.",
-  },
-  {
-    title: "Quality & Comfort",
-    description:
-      "Premium materials and expert tailoring ensure comfort during every pirouette. We never compromise on quality because our dancers deserve the best.",
-  },
-  {
-    title: "Magical Experience",
-    description:
-      "Transform your little one into a princess ballerina with our enchanting collection. We believe in making dreams come true, one tutu at a time.",
-  },
-  {
-    title: "Sustainability",
-    description:
-      "We are committed to protecting our planet. Our eco-friendly practices and sustainable materials ensure a beautiful future for all dancers.",
-  },
-  {
-    title: "Inclusivity",
-    description:
-      "Ballet is for everyone. We celebrate dancers of all backgrounds, body types, and abilities in our inclusive and welcoming community.",
-  },
-  {
-    title: "Customer Care",
-    description:
-      "Your satisfaction is our priority. We provide exceptional customer service and support because every customer is part of the Princess Pirouette family.",
-  },
-];
+const magnolia = Great_Vibes({ subsets: ["latin"], weight: ["400"] });
+const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400", "700"], style: ["italic"] });
 
-export default function ValuesPage() {
+const cardStyle = {
+  backgroundColor: "rgba(255, 255, 255, 0.92)",
+  border: "2px solid #B8860B",
+};
+
+export default function OurValues() {
   return (
-    <main style={{ backgroundColor: "#FFF5F7", minHeight: "100vh", paddingTop: "100px" }}>
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        <h1
-          className="text-5xl font-magnolia mb-12 text-center"
-          style={{ color: "#D4AF37" }}
+    <main className="relative z-10 py-20 px-6 min-h-screen">
+      <div className="max-w-3xl mx-auto space-y-16">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center"
         >
-          Our Values
-        </h1>
+          <h1
+            className={`${magnolia.className} text-5xl md:text-6xl mb-4`}
+            style={{ color: "#D4AF37" }}
+          >
+            Our Values
+          </h1>
+        </motion.div>
 
-        <p
-          className="text-xl text-center mb-16 max-w-3xl mx-auto"
-          style={{ color: "#C09090" }}
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="p-8 rounded-3xl shadow-md"
+          style={cardStyle}
         >
-          At Princess Pirouette Boutique, our values guide everything we do. From the products we
-          create to the relationships we build with our community, we are driven by a passion for
-          excellence and a commitment to making a positive impact.
-        </p>
-
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          {valuesList.map((value, index) => (
-            <div
-              key={index}
-              className="p-8 rounded-lg border-2 bg-white hover:shadow-lg transition-shadow"
-              style={{ borderColor: "#B8860B" }}
-            >
-              <div className="flex items-start gap-4 mb-4">
-                <div className="rounded-full p-3 flex-shrink-0" style={{ backgroundColor: "#FFD1DC" }}>
-                  <CrownIcon width={24} height={24} color="#D4AF37" />
-                </div>
-                <h2 className="text-2xl font-playfair italic font-bold" style={{ color: "#B8860B" }}>
-                  {value.title}
-                </h2>
-              </div>
-              <p style={{ color: "#C09090", lineHeight: "1.8" }}>
-                {value.description}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        <section className="p-8 rounded-lg border-2 bg-white" style={{ borderColor: "#B8860B" }}>
-          <h2 className="text-3xl font-playfair italic font-bold mb-6 text-center" style={{ color: "#B8860B" }}>
-            Join Our Community
+          <h2 className={`${playfair.className} italic text-2xl md:text-3xl font-bold mb-4`} style={{ color: "#D4AF37" }}>
+            Sustainability
           </h2>
-          <p style={{ color: "#C09090", lineHeight: "1.8", marginBottom: "1.5rem" }}>
-            We invite you to be part of the Princess Pirouette family. Whether you're a young dancer
-            just starting your journey or an experienced performer, we celebrate your passion and
-            support your dreams. Together, we create a community where every dancer feels magical,
-            supported, and inspired.
+          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090" }}>
+            At Princess Pirouette Boutique we believe that true luxury never comes at the cost of our planet. Every piece is crafted from premium recycled and organic fibers — from our silky-soft regenerated performance fabrics to our signature bamboo-lined gussets. Even our packaging is eco-friendly.
           </p>
-          <div className="text-center">
-            <a
-              href="/shop"
-              className="inline-block px-6 py-3 rounded-lg font-playfair italic font-semibold text-white transition-all"
-              style={{ backgroundColor: "#D4AF37" }}
-              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#B8860B")}
-              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#D4AF37")}
-            >
-              Explore Our Collection
-            </a>
-          </div>
-        </section>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="p-8 rounded-3xl shadow-md"
+          style={cardStyle}
+        >
+          <h2 className={`${playfair.className} italic text-2xl md:text-3xl font-bold mb-4`} style={{ color: "#D4AF37" }}>
+            OEKO-TEX Certified
+          </h2>
+          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090" }}>
+            Our fabrics are OEKO-TEX certified — meaning every material used in our garments has been tested for harmful substances and meets the highest safety standards. We only put on your body what is safe, clean, and kind to the earth.
+          </p>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="p-8 rounded-3xl shadow-md"
+          style={cardStyle}
+        >
+          <h2 className={`${playfair.className} italic text-2xl md:text-3xl font-bold mb-4`} style={{ color: "#D4AF37" }}>
+            Supporting Artists
+          </h2>
+          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090" }}>
+            Every Princess Pirouette design starts with our own original concepts and mockups, brought to life through talented artists and pattern makers we partner with and fairly compensate — from sublimation artwork to vector designs.
+          </p>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="p-8 rounded-3xl shadow-md"
+          style={cardStyle}
+        >
+          <h2 className={`${playfair.className} italic text-2xl md:text-3xl font-bold mb-4`} style={{ color: "#D4AF37" }}>
+            Our Promise to You
+          </h2>
+          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090" }}>
+            Every decision we make — from the materials we choose to the artists we work with — is guided by our commitment to magic, sustainability, and inclusivity. Because the little princess inside everyone deserves a world that sparkles, inside and out.
+          </p>
+        </motion.section>
       </div>
     </main>
   );

@@ -1,130 +1,119 @@
 "use client";
 
-export default function SizingGuidePage() {
+import { motion } from "framer-motion";
+import { Great_Vibes, Playfair_Display } from "next/font/google";
+
+const magnolia = Great_Vibes({ subsets: ["latin"], weight: ["400"] });
+const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400", "700"], style: ["italic"] });
+
+const cardStyle = {
+  backgroundColor: "rgba(255, 255, 255, 0.92)",
+  border: "2px solid #B8860B",
+};
+
+export default function SizingGuide() {
   return (
-    <main style={{ backgroundColor: "#FFF5F7", minHeight: "100vh", paddingTop: "100px" }}>
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        <h1
-          className="text-5xl font-magnolia mb-12 text-center"
-          style={{ color: "#D4AF37" }}
+    <main className="relative z-10 py-20 px-6 min-h-screen">
+      <div className="max-w-3xl mx-auto space-y-16">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center"
         >
-          Sizing Guide
-        </h1>
+          <h1 className={`${magnolia.className} text-5xl md:text-6xl mb-4`} style={{ color: "#D4AF37" }}>
+            Sizing Guide
+          </h1>
+        </motion.div>
 
-        <section className="mb-12">
-          <h2 className="text-3xl font-playfair italic font-bold mb-6" style={{ color: "#B8860B" }}>
-            How to Measure
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="p-8 rounded-3xl shadow-md"
+          style={cardStyle}
+        >
+          <h2 className={`${playfair.className} italic text-2xl md:text-3xl font-bold mb-4`} style={{ color: "#D4AF37" }}>
+            How to Measure Yourself
           </h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="p-6 rounded-lg border-2 bg-white" style={{ borderColor: "#B8860B" }}>
-              <h3 className="font-playfair italic font-bold mb-3" style={{ color: "#D4AF37" }}>
-                Chest
-              </h3>
-              <p style={{ color: "#C09090" }}>
-                Measure around the fullest part of the chest, keeping the measuring tape parallel to the ground.
-              </p>
-            </div>
-            <div className="p-6 rounded-lg border-2 bg-white" style={{ borderColor: "#B8860B" }}>
-              <h3 className="font-playfair italic font-bold mb-3" style={{ color: "#D4AF37" }}>
-                Waist
-              </h3>
-              <p style={{ color: "#C09090" }}>
-                Measure around the natural waistline, keeping the tape snug but not tight.
-              </p>
-            </div>
-            <div className="p-6 rounded-lg border-2 bg-white" style={{ borderColor: "#B8860B" }}>
-              <h3 className="font-playfair italic font-bold mb-3" style={{ color: "#D4AF37" }}>
-                Length
-              </h3>
-              <p style={{ color: "#C09090" }}>
-                Measure from the shoulder to the desired hem length, typically to the knee for tutus.
-              </p>
-            </div>
-            <div className="p-6 rounded-lg border-2 bg-white" style={{ borderColor: "#B8860B" }}>
-              <h3 className="font-playfair italic font-bold mb-3" style={{ color: "#D4AF37" }}>
-                Inseam
-              </h3>
-              <p style={{ color: "#C09090" }}>
-                Measure from the inner thigh to the ankle for pants and leggings.
-              </p>
-            </div>
-          </div>
-        </section>
+          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090" }}>
+            For the most accurate fit, use a soft measuring tape and measure over your undergarments. Have a friend help if possible!
+          </p>
+          <ul className="mt-4 space-y-3 text-base md:text-lg leading-loose" style={{ color: "#C09090" }}>
+            <li><strong style={{ color: "#B8860B" }}>Bust</strong> — Measure around the fullest part of your chest</li>
+            <li><strong style={{ color: "#B8860B" }}>Waist</strong> — Measure around your natural waistline, the narrowest part</li>
+            <li><strong style={{ color: "#B8860B" }}>Hip</strong> — Measure around the fullest part of your hips and buttocks. This will hit where the legline will lay</li>
+            <li><strong style={{ color: "#B8860B" }}>Girth</strong> — Measure from your shoulder, down through your crotch and back up to your shoulder</li>
+          </ul>
+        </motion.section>
 
-        <section>
-          <h2 className="text-3xl font-playfair italic font-bold mb-6" style={{ color: "#B8860B" }}>
-            Size Chart
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="p-8 rounded-3xl shadow-md"
+          style={cardStyle}
+        >
+          <h2 className={`${playfair.className} italic text-2xl md:text-3xl font-bold mb-6`} style={{ color: "#D4AF37" }}>
+            Ballet Leotard Size Chart
           </h2>
-          <div className="overflow-x-auto border-2 rounded-lg" style={{ borderColor: "#B8860B" }}>
-            <table className="w-full bg-white">
+          <div className="overflow-x-auto">
+            <table className="w-full text-center text-sm md:text-base" style={{ color: "#C09090" }}>
               <thead>
-                <tr style={{ backgroundColor: "#FFD1DC" }}>
-                  <th className="px-4 py-3 text-left font-playfair italic font-bold" style={{ color: "#B8860B" }}>
-                    Size
-                  </th>
-                  <th className="px-4 py-3 text-left font-playfair italic font-bold" style={{ color: "#B8860B" }}>
-                    Age
-                  </th>
-                  <th className="px-4 py-3 text-left font-playfair italic font-bold" style={{ color: "#B8860B" }}>
-                    Chest (in)
-                  </th>
-                  <th className="px-4 py-3 text-left font-playfair italic font-bold" style={{ color: "#B8860B" }}>
-                    Waist (in)
-                  </th>
-                  <th className="px-4 py-3 text-left font-playfair italic font-bold" style={{ color: "#B8860B" }}>
-                    Length (in)
-                  </th>
+                <tr style={{ borderBottom: "2px solid #B8860B" }}>
+                  <th className="py-3 px-2 font-bold" style={{ color: "#B8860B" }}>Measurement</th>
+                  <th className="py-3 px-2 font-bold" style={{ color: "#B8860B" }}>XS</th>
+                  <th className="py-3 px-2 font-bold" style={{ color: "#B8860B" }}>S</th>
+                  <th className="py-3 px-2 font-bold" style={{ color: "#B8860B" }}>M</th>
+                  <th className="py-3 px-2 font-bold" style={{ color: "#B8860B" }}>L</th>
+                  <th className="py-3 px-2 font-bold" style={{ color: "#B8860B" }}>XL</th>
                 </tr>
               </thead>
               <tbody>
                 {[
-                  { size: "XS", age: "2-4", chest: "20-22", waist: "19-21", length: "12-14" },
-                  { size: "S", age: "4-6", chest: "22-24", waist: "21-23", length: "14-16" },
-                  { size: "M", age: "6-8", chest: "24-26", waist: "23-25", length: "16-18" },
-                  { size: "L", age: "8-10", chest: "26-28", waist: "25-27", length: "18-20" },
-                  { size: "XL", age: "10-12", chest: "28-30", waist: "27-29", length: "20-22" },
-                ].map((row) => (
-                  <tr key={row.size} style={{ borderBottom: "1px solid #FFD1DC" }}>
-                    <td className="px-4 py-3 font-playfair italic font-bold" style={{ color: "#D4AF37" }}>
-                      {row.size}
-                    </td>
-                    <td className="px-4 py-3" style={{ color: "#C09090" }}>
-                      {row.age}
-                    </td>
-                    <td className="px-4 py-3" style={{ color: "#C09090" }}>
-                      {row.chest}
-                    </td>
-                    <td className="px-4 py-3" style={{ color: "#C09090" }}>
-                      {row.waist}
-                    </td>
-                    <td className="px-4 py-3" style={{ color: "#C09090" }}>
-                      {row.length}
-                    </td>
+                  { measurement: "Bust", xs: '28-31"', s: '32-34"', m: '35-38"', l: '38-41"', xl: '41-44"' },
+                  { measurement: "Waist", xs: '23-25"', s: '25-28"', m: '28-32"', l: '33-36"', xl: '36-39"' },
+                  { measurement: "Hip", xs: '30-34"', s: '34-38"', m: '37-42"', l: '42-46"', xl: '46-50"' },
+                  { measurement: "Girth", xs: '53-56"', s: '55-58"', m: '59-63"', l: '63-67"', xl: '67-70"' },
+                ].map((row, i) => (
+                  <tr key={row.measurement} style={{ backgroundColor: i % 2 === 0 ? "rgba(255,209,220,0.15)" : "transparent", borderBottom: "1px solid rgba(184,134,11,0.2)" }}>
+                    <td className="py-3 px-2 font-bold" style={{ color: "#B8860B" }}>{row.measurement}</td>
+                    <td className="py-3 px-2">{row.xs}</td>
+                    <td className="py-3 px-2">{row.s}</td>
+                    <td className="py-3 px-2">{row.m}</td>
+                    <td className="py-3 px-2">{row.l}</td>
+                    <td className="py-3 px-2">{row.xl}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        </section>
-
-        <section className="mt-12 p-6 rounded-lg border-2 bg-white" style={{ borderColor: "#B8860B" }}>
-          <h2 className="text-2xl font-playfair italic font-bold mb-4" style={{ color: "#B8860B" }}>
-            Need Help Finding Your Size?
-          </h2>
-          <p style={{ color: "#C09090", marginBottom: "1rem" }}>
-            If you're unsure about sizing, our customer support team is here to help! Contact us for personalized
-            recommendations.
+          <p className="mt-6 text-sm leading-loose" style={{ color: "#C09090" }}>
+            ** These leotards are made with professional-grade 210 GSM Recycled Matte Nylon/Lycra — thicker and more supportive than standard streetwear. For the best fit, prioritize your Girth measurement.
           </p>
-          <a
-            href="/contact"
-            className="inline-block px-6 py-2 rounded-lg font-playfair italic font-semibold text-white transition-all"
-            style={{ backgroundColor: "#D4AF37" }}
-            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#B8860B")}
-            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#D4AF37")}
-          >
-            Contact Support
-          </a>
-        </section>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="p-8 rounded-3xl shadow-md"
+          style={cardStyle}
+        >
+          <h2 className={`${playfair.className} italic text-2xl md:text-3xl font-bold mb-4`} style={{ color: "#D4AF37" }}>
+            Fit Tips
+          </h2>
+          <ul className="space-y-3 text-base md:text-lg leading-loose" style={{ color: "#C09090" }}>
+            <li>For a relaxed casual fit, consider sizing up</li>
+            <li>For high-impact dance or athletics, consider sizing down</li>
+            <li>Always prioritize your Girth measurement for the best fit</li>
+            <li>If between sizes, size up for all-day comfort</li>
+            <li>Still unsure? Contact us and we will help you find your perfect fit</li>
+          </ul>
+        </motion.section>
       </div>
     </main>
   );

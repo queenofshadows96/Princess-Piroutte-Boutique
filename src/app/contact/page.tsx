@@ -1,212 +1,193 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { Great_Vibes, Playfair_Display } from "next/font/google";
 import { useState } from "react";
-import { Metadata } from "next";
+import emailjs from "@emailjs/browser";
 
-export default function ContactPage() {
-  const [formData, setFormData] = useState({
+const magnolia = Great_Vibes({ subsets: ["latin"], weight: ["400"] });
+const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400", "700"], style: ["italic"] });
+
+const cardStyle = {
+  backgroundColor: "rgba(255, 255, 255, 0.92)",
+  border: "2px solid #B8860B",
+};
+
+export default function Contact() {
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [form, setForm] = useState({
     name: "",
     email: "",
     subject: "",
     message: "",
   });
 
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError("");
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      await emailjs.send(
+        "service_jrq8yjl",
+        "template_svqon5v",
+        {
+          name: form.name,
+          email: form.email,
+          subject: form.subject,
+          message: form.message,
         },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        setSubmitted(true);
-        setFormData({ name: "", email: "", subject: "", message: "" });
-
-        // Reset success message after 5 seconds
-        setTimeout(() => setSubmitted(false), 5000);
-      } else {
-        console.error("Failed to send email");
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
+        "zgdvRJeC2Ft5Gcfab"
+      );
+      setSubmitted(true);
+    } catch (err) {
+      setError("Something went wrong. Please try again or email us directly at royals@princesspirouetteboutique.com");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <main style={{ backgroundColor: "#FFF5F7", minHeight: "100vh", paddingTop: "100px" }}>
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        <h1
-          className="text-5xl font-magnolia mb-12 text-center"
-          style={{ color: "#D4AF37" }}
+    <main className="relative z-10 py-20 px-6 min-h-screen">
+      <div className="max-w-3xl mx-auto space-y-16">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center"
         >
-          Contact Us
-        </h1>
+          <h1
+            className={`${magnolia.className} text-5xl md:text-6xl mb-4`}
+            style={{ color: "#D4AF37" }}
+          >
+            Contact Us
+          </h1>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12">
-          {/* Contact Info */}
-          <div>
-            <h2 className="text-2xl font-playfair italic font-bold mb-6" style={{ color: "#B8860B" }}>
-              Get in Touch
-            </h2>
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="p-8 rounded-3xl shadow-md text-center"
+          style={cardStyle}
+        >
+          <h2
+            className={`${playfair.className} italic text-2xl md:text-3xl font-bold mb-4`}
+            style={{ color: "#D4AF37" }}
+          >
+            We Would Love to Hear From You
+          </h2>
+          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090" }}>
+            Whether you have a question about sizing, a custom order request, or just want to say hello — we are here for you.
+          </p>
+        </motion.section>
 
-            <div className="space-y-8">
-              <div>
-                <h3 className="font-playfair italic font-bold mb-2" style={{ color: "#D4AF37" }}>
-                  Email
-                </h3>
-                <p style={{ color: "#C09090" }}>
-                  <a
-                    href="mailto:support@princesspirouette.com"
-                    className="hover:underline"
-                  >
-                    support@princesspirouette.com
-                  </a>
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-playfair italic font-bold mb-2" style={{ color: "#D4AF37" }}>
-                  Phone
-                </h3>
-                <p style={{ color: "#C09090" }}>
-                  <a href="tel:+1-800-TUTUS-01" className="hover:underline">
-                    +1-800-TUTUS-01
-                  </a>
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-playfair italic font-bold mb-2" style={{ color: "#D4AF37" }}>
-                  Hours
-                </h3>
-                <p style={{ color: "#C09090" }}>
-                  Monday - Friday: 9 AM - 6 PM EST
-                  <br />
-                  Saturday: 10 AM - 4 PM EST
-                  <br />
-                  Sunday: Closed
-                </p>
-              </div>
-
-              <div className="p-6 rounded-lg border-2 bg-white" style={{ borderColor: "#B8860B" }}>
-                <p style={{ color: "#C09090" }}>
-                  We'd love to hear from you! Whether you have questions, feedback, or just want to
-                  say hello, don't hesitate to reach out.
-                </p>
-              </div>
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="p-8 rounded-3xl shadow-md"
+          style={cardStyle}
+        >
+          {submitted ? (
+            <div className="text-center py-10">
+              <h2
+                className={`${playfair.className} italic text-2xl font-bold mb-4`}
+                style={{ color: "#D4AF37" }}
+              >
+                Thank You, Princess!
+              </h2>
+              <p style={{ color: "#C09090" }}>
+                Your message has been received. We will be in touch with you shortly!
+              </p>
             </div>
-          </div>
-
-          {/* Contact Form */}
-          <div>
-            <form
-              onSubmit={handleSubmit}
-              className="space-y-6 p-8 rounded-lg border-2 bg-white"
-              style={{ borderColor: "#B8860B" }}
-            >
-              {submitted && (
-                <div
-                  className="p-4 rounded-lg text-white font-playfair"
-                  style={{ backgroundColor: "#D4AF37" }}
-                >
-                  Thank you! We'll get back to you soon.
-                </div>
-              )}
+          ) : (
+            <div className="space-y-6">
+              <h2
+                className={`${playfair.className} italic text-2xl md:text-3xl font-bold mb-6`}
+                style={{ color: "#D4AF37" }}
+              >
+                Send Us a Message
+              </h2>
 
               <div>
-                <label className="block font-playfair italic font-bold mb-2" style={{ color: "#B8860B" }}>
-                  Name
-                </label>
+                <label className="block text-sm font-bold mb-2" style={{ color: "#B8860B" }}>Your Name</label>
                 <input
                   type="text"
                   name="name"
-                  value={formData.name}
+                  value={form.name}
                   onChange={handleChange}
-                  required
-                  className="w-full p-3 border-2 rounded"
-                  style={{ borderColor: "#B8860B" }}
+                  placeholder="Your name"
+                  className="w-full px-4 py-3 rounded-xl outline-none transition-all duration-200"
+                  style={{ border: "1.5px solid #B8860B", backgroundColor: "rgba(255,245,247,0.5)", color: "#8B5A6A" }}
                 />
               </div>
 
               <div>
-                <label className="block font-playfair italic font-bold mb-2" style={{ color: "#B8860B" }}>
-                  Email
-                </label>
+                <label className="block text-sm font-bold mb-2" style={{ color: "#B8860B" }}>Email Address</label>
                 <input
                   type="email"
                   name="email"
-                  value={formData.email}
+                  value={form.email}
                   onChange={handleChange}
-                  required
-                  className="w-full p-3 border-2 rounded"
-                  style={{ borderColor: "#B8860B" }}
+                  placeholder="your@email.com"
+                  className="w-full px-4 py-3 rounded-xl outline-none transition-all duration-200"
+                  style={{ border: "1.5px solid #B8860B", backgroundColor: "rgba(255,245,247,0.5)", color: "#8B5A6A" }}
                 />
               </div>
 
               <div>
-                <label className="block font-playfair italic font-bold mb-2" style={{ color: "#B8860B" }}>
-                  Subject
-                </label>
-                <input
-                  type="text"
+                <label className="block text-sm font-bold mb-2" style={{ color: "#B8860B" }}>Subject</label>
+                <select
                   name="subject"
-                  value={formData.subject}
+                  value={form.subject}
                   onChange={handleChange}
-                  required
-                  className="w-full p-3 border-2 rounded"
-                  style={{ borderColor: "#B8860B" }}
-                />
+                  className="w-full px-4 py-3 rounded-xl outline-none transition-all duration-200"
+                  style={{ border: "1.5px solid #B8860B", backgroundColor: "rgba(255,245,247,0.5)", color: "#8B5A6A" }}
+                >
+                  <option value="">Select a subject...</option>
+                  <option value="sizing">Sizing Question</option>
+                  <option value="order">Order Inquiry</option>
+                  <option value="custom">Custom Order Request</option>
+                  <option value="return">Return or Exchange</option>
+                  <option value="other">Other</option>
+                </select>
               </div>
 
               <div>
-                <label className="block font-playfair italic font-bold mb-2" style={{ color: "#B8860B" }}>
-                  Message
-                </label>
+                <label className="block text-sm font-bold mb-2" style={{ color: "#B8860B" }}>Your Message</label>
                 <textarea
                   name="message"
-                  value={formData.message}
+                  value={form.message}
                   onChange={handleChange}
-                  required
-                  rows={5}
-                  className="w-full p-3 border-2 rounded resize-none"
-                  style={{ borderColor: "#B8860B" }}
+                  placeholder="Tell us how we can help..."
+                  rows={6}
+                  className="w-full px-4 py-3 rounded-xl outline-none transition-all duration-200 resize-none"
+                  style={{ border: "1.5px solid #B8860B", backgroundColor: "rgba(255,245,247,0.5)", color: "#8B5A6A" }}
                 />
               </div>
 
+              {error && <p className="text-sm text-center" style={{ color: "#C09090" }}>{error}</p>}
+
               <button
-                type="submit"
+                onClick={handleSubmit}
                 disabled={loading}
-                className="w-full py-3 rounded-lg font-playfair italic font-bold text-white transition-all disabled:opacity-50"
-                style={{ backgroundColor: "#D4AF37" }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#B8860B")}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#D4AF37")}
+                className="w-full py-4 rounded-full font-bold text-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                style={{ backgroundColor: "#FFD1DC", color: "#D4AF37", border: "2px solid #B8860B", opacity: loading ? 0.7 : 1 }}
               >
                 {loading ? "Sending..." : "Send Message"}
               </button>
-            </form>
-          </div>
-        </div>
+            </div>
+          )}
+        </motion.section>
       </div>
     </main>
   );
