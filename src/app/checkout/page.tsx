@@ -30,7 +30,7 @@ export default function Checkout() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const shipping = 0;
+  const shipping: number = 0;
   const orderTotal = totalPrice;
 
 
