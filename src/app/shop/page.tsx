@@ -95,7 +95,7 @@ export default function Shop() {
           >
             Our Collection
           </h1>
-          <p className="text-lg" style={{ color: "#C09090" }}>
+          <p className="text-lg" style={{ color: "#C09090", fontFamily: "'Times New Roman', serif" }}>
             Discover our most enchanting pieces, crafted for your inner princess
           </p>
         </motion.div>

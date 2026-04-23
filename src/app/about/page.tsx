@@ -43,13 +43,13 @@ export default function About() {
           >
             A Magical Belief
           </h2>
-          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090" }}>
+          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090", fontFamily: "'Times New Roman', serif" }}>
             Princess Pirouette Boutique was born from a magical belief:{" "}
             <strong>that elegance and imagination belong together.</strong>{" "}We don&apos;t just
             design dancewear; we create wearable works of art — a perfect blend of functionality,
             femininity, and fantasy.
           </p>
-          <p className="text-base md:text-lg leading-loose mt-4" style={{ color: "#C09090" }}>
+          <p className="text-base md:text-lg leading-loose mt-4" style={{ color: "#C09090", fontFamily: "'Times New Roman', serif" }}>
             Our boutique is dedicated to celebrating the graceful, playful, and magical spirit
             that lives within everyone. Whether you are a seasoned dancer or a recreational
             enthusiast, our collections are thoughtfully designed to capture the wonder of
@@ -71,14 +71,14 @@ export default function About() {
           >
             Mindful Luxury for a Beautiful World
           </h2>
-          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090" }}>
+          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090", fontFamily: "'Times New Roman', serif" }}>
             We believe that the world we dance in should be as beautiful as the art itself. That
             is why Princess Pirouette is committed to{" "}
             <strong>mindful luxury</strong>. We use premium recycled and organic fibers — from
             our silky-soft regenerated performance fabrics to our signature bamboo-lined gussets
             — ensuring our garments are as gentle on the earth as they are on your skin.
           </p>
-          <p className="text-base md:text-lg leading-loose mt-4" style={{ color: "#C09090" }}>
+          <p className="text-base md:text-lg leading-loose mt-4" style={{ color: "#C09090", fontFamily: "'Times New Roman', serif" }}>
             Even our packaging is eco-friendly, protecting the magic of our planet so you can
             shine inside and out.
           </p>
@@ -114,7 +114,7 @@ export default function About() {
               >
                 {value.title}
               </h3>
-              <p style={{ color: "#C09090" }}>{value.desc}</p>
+              <p style={{ color: "#C09090", fontFamily: "'Times New Roman', serif" }}>{value.desc}</p>
             </motion.div>
           ))}
         </div>

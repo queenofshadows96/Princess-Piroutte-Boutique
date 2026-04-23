@@ -4,6 +4,7 @@ import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import NavBar from "@/components/NavBar";
 import FloatingBackground from "@/components/FloatingBackground";
+import CurtainReveal from "@/components/CurtainReveal";
 
 const greatVibes = Great_Vibes({
   subsets: ["latin"],
@@ -23,6 +24,8 @@ export const metadata: Metadata = {
   description: "Magical and Sustainable Apparel for your Inner Little Princess",
 };
 
+export const viewport = "width=device-width";
+
 export default function RootLayout({
   children,
 }: {
@@ -31,6 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${greatVibes.variable} ${playfairDisplay.variable} min-h-screen antialiased`}>
+        <CurtainReveal />
         <CartProvider>
           <FloatingBackground />
           <NavBar />

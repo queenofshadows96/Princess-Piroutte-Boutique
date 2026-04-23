@@ -110,7 +110,7 @@ CREATE TABLE customers (
 **Webhook Setup** (optional, for production):
 
 1. In Stripe Dashboard, go to Webhooks
-2. Add endpoint for `http://yourdomain.com/api/webhooks/stripe`
+2. Add endpoint for `http://yourdomain.com/api/webhook`
 3. Listen for events: `checkout.session.completed`, `payment_intent.succeeded`
 
 ### 3. EmailJS (Email Notifications)

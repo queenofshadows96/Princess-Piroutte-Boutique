@@ -37,10 +37,10 @@ export default function SizingGuide() {
           <h2 className={`${playfair.className} italic text-2xl md:text-3xl font-bold mb-4`} style={{ color: "#D4AF37" }}>
             How to Measure Yourself
           </h2>
-          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090" }}>
+          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090", fontFamily: "'Times New Roman', serif" }}>
             For the most accurate fit, use a soft measuring tape and measure over your undergarments. Have a friend help if possible!
           </p>
-          <ul className="mt-4 space-y-3 text-base md:text-lg leading-loose" style={{ color: "#C09090" }}>
+          <ul className="mt-4 space-y-3 text-base md:text-lg leading-loose" style={{ color: "#C09090", fontFamily: "'Times New Roman', serif" }}>
             <li><strong style={{ color: "#B8860B" }}>Bust</strong> — Measure around the fullest part of your chest</li>
             <li><strong style={{ color: "#B8860B" }}>Waist</strong> — Measure around your natural waistline, the narrowest part</li>
             <li><strong style={{ color: "#B8860B" }}>Hip</strong> — Measure around the fullest part of your hips and buttocks. This will hit where the legline will lay</li>
@@ -60,7 +60,7 @@ export default function SizingGuide() {
             Ballet Leotard Size Chart
           </h2>
           <div className="overflow-x-auto">
-            <table className="w-full text-center text-sm md:text-base" style={{ color: "#C09090" }}>
+            <table className="w-full text-center text-sm md:text-base" style={{ color: "#C09090", fontFamily: "'Times New Roman', serif" }}>
               <thead>
                 <tr style={{ borderBottom: "2px solid #B8860B" }}>
                   <th className="py-3 px-2 font-bold" style={{ color: "#B8860B" }}>Measurement</th>
@@ -90,7 +90,7 @@ export default function SizingGuide() {
               </tbody>
             </table>
           </div>
-          <p className="mt-6 text-sm leading-loose" style={{ color: "#C09090" }}>
+          <p className="mt-6 text-sm leading-loose" style={{ color: "#C09090", fontFamily: "'Times New Roman', serif" }}>
             ** These leotards are made with professional-grade 210 GSM Recycled Matte Nylon/Lycra — thicker and more supportive than standard streetwear. For the best fit, prioritize your Girth measurement.
           </p>
         </motion.section>
@@ -106,7 +106,7 @@ export default function SizingGuide() {
           <h2 className={`${playfair.className} italic text-2xl md:text-3xl font-bold mb-4`} style={{ color: "#D4AF37" }}>
             Fit Tips
           </h2>
-          <ul className="space-y-3 text-base md:text-lg leading-loose" style={{ color: "#C09090" }}>
+          <ul className="space-y-3 text-base md:text-lg leading-loose" style={{ color: "#C09090", fontFamily: "'Times New Roman', serif" }}>
             <li>For a relaxed casual fit, consider sizing up</li>
             <li>For high-impact dance or athletics, consider sizing down</li>
             <li>Always prioritize your Girth measurement for the best fit</li>

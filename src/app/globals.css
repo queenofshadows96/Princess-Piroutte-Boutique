@@ -64,8 +64,9 @@
   }
 
   body {
-    @apply bg-pink-background text-body antialiased;
-  }
+  @apply antialiased;
+  background-color: #FFF5F7;
+}
 
   /* Typography */
   h1, h2, h3, h4, h5, h6 {

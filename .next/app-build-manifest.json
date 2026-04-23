@@ -3,6 +3,7 @@
     "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
+      "static/css/app/page.css",
       "static/chunks/app/page.js"
     ],
     "/layout": [
@@ -14,46 +15,49 @@
     "/shop/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
+      "static/css/app/shop/page.css",
       "static/chunks/app/shop/page.js"
-    ],
-    "/sizing-guide/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/sizing-guide/page.js"
-    ],
-    "/shop/[id]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/shop/[id]/page.js"
     ],
     "/checkout/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
+      "static/css/app/checkout/page.css",
       "static/chunks/app/checkout/page.js"
-    ],
-    "/about/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/about/page.js"
     ],
     "/checkout/success/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
+      "static/css/app/checkout/success/page.css",
       "static/chunks/app/checkout/success/page.js"
     ],
-    "/values/page": [
+    "/shop/[id]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/values/page.js"
+      "static/css/app/shop/[id]/page.css",
+      "static/chunks/app/shop/[id]/page.js"
     ],
     "/faq/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
+      "static/css/app/faq/page.css",
       "static/chunks/app/faq/page.js"
+    ],
+    "/about/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/about/page.css",
+      "static/chunks/app/about/page.js"
+    ],
+    "/values/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/values/page.css",
+      "static/chunks/app/values/page.js"
     ],
     "/contact/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
+      "static/css/app/contact/page.css",
       "static/chunks/app/contact/page.js"
     ]
   }

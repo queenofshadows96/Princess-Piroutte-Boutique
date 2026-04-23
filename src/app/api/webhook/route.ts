@@ -31,17 +31,17 @@ export async function POST(req: NextRequest) {
       const session = event.data.object as Stripe.Checkout.Session;
 
       const { error: insertError } = await supabase.from("orders").insert({
-        customer_email: session.customer_email,
-        customer_name: session.customer_details?.name ?? null,
-        shipping_address: session.customer_details?.address
-          ? JSON.stringify(session.customer_details.address)
-          : null,
-        total: session.amount_total ? session.amount_total / 100 : 0,
-        status: "paid",
-        stripe_payment_id: session.payment_intent
-          ? String(session.payment_intent)
-          : null,
-      });
+  customer_email: session.customer_email,
+  customer_name: session.customer_details?.name ?? null,
+  shipping_address: session.customer_details?.address
+    ? JSON.stringify(session.customer_details.address)
+    : null,
+  total: session.amount_total ? session.amount_total / 100 : 0,
+  status: "paid",
+  stripe_payment_id: session.payment_intent
+    ? String(session.payment_intent)
+    : null,
+});
 
       if (insertError) {
         console.error("Supabase insert error:", insertError);

@@ -19,17 +19,7 @@ export async function POST(req: NextRequest) {
         },
         quantity: item.quantity,
       })),
-      {
-        price_data: {
-          currency: "usd",
-          product_data: {
-            name: "Shipping",
-            description: "Standard US Shipping",
-          },
-          unit_amount: 500,
-        },
-        quantity: 1,
-      },
+      
     ];
 
     const session = await stripe.checkout.sessions.create({
@@ -40,8 +30,11 @@ export async function POST(req: NextRequest) {
       shipping_address_collection: {
         allowed_countries: ["US"],
       },
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/success`,
+      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/cancel`,
+      metadata: {
+        items: JSON.stringify(items),
+      },
     });
 
     return NextResponse.json({ url: session.url });

@@ -20,7 +20,7 @@ export default function CheckoutCancel() {
         <h1 className={`${magnolia.className} text-5xl md:text-6xl mb-6`} style={{ color: "#D4AF37" }}>
           No Worries, Princess!
         </h1>
-        <p className="text-base md:text-lg leading-loose mb-8" style={{ color: "#C09090" }}>
+        <p className="text-base md:text-lg leading-loose mb-8" style={{ color: "#C09090", fontFamily: "'Times New Roman', serif" }}>
           Your order was cancelled and you have not been charged. Your cart is still waiting for you whenever you are ready!
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">

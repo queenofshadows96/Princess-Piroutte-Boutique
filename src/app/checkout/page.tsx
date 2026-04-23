@@ -30,8 +30,9 @@ export default function Checkout() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const shipping = totalPrice > 0 ? 5.00 : 0;
-  const orderTotal = totalPrice + shipping;
+  const shipping = 0;
+  const orderTotal = totalPrice;
+
 
   const set = (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm((prev) => ({ ...prev, [field]: e.target.value }));

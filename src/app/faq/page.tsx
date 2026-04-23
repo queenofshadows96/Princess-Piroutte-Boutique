@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     question: "What are your leotards made of?",
-    answer: "Our leotards are made with professional-grade 210 GSM Recycled Matte Nylon/Lycra — thicker and more supportive than standard streetwear, providing a sculpted feel while being gentle on the earth.",
+    answer: "Our leotards are made with professional-grade 210 GSM Recycled Matte Nylon/Lycra, with a bamboo gusset lining — thicker and more supportive than standard streetwear, providing a sculpted feel while being gentle on the earth.",
   },
   {
     question: "Are your products sustainable?",
@@ -31,7 +31,7 @@ const faqs = [
   },
   {
     question: "What is your return policy?",
-    answer: "We accept returns within 30 days of purchase for unworn, unwashed items with tags still attached. Please contact us to initiate a return.",
+    answer: "We accept returns within 30 days of purchase for unworn, unwashed items with tags and hygiene liners still attached. Please contact us to initiate a return.",
   },
   {
     question: "Can I exchange for a different size?",
@@ -39,11 +39,11 @@ const faqs = [
   },
   {
     question: "Do you offer custom orders?",
-    answer: "We love bringing magical visions to life! Contact us through our Contact page to discuss custom orders.",
+    answer: "Not at the monment, but we plan to in the future! Stay tuned for updates on custom options and collaborations.",
   },
   {
     question: "How do I care for my leotard?",
-    answer: "Hand wash in cold water with a gentle detergent and hang to dry — never put in the dryer.",
+    answer: "Hand wash in cold water with a gentle detergent and lay flat to dry — never put in the dryer.",
   },
 ];
 
@@ -94,7 +94,7 @@ export default function FAQ() {
               </button>
               {openIndex === index && (
                 <div className="px-8 pb-6">
-                  <p className="text-base leading-loose" style={{ color: "#C09090" }}>
+                  <p className="text-base leading-loose" style={{ color: "#C09090", fontFamily: "'Times New Roman', serif" }}>
                     {faq.answer}
                   </p>
                 </div>

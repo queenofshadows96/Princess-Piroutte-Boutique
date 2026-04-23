@@ -40,7 +40,7 @@ export default function OurValues() {
           <h2 className={`${playfair.className} italic text-2xl md:text-3xl font-bold mb-4`} style={{ color: "#D4AF37" }}>
             Sustainability
           </h2>
-          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090" }}>
+          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090", fontFamily: "'Times New Roman', serif" }}>
             At Princess Pirouette Boutique we believe that true luxury never comes at the cost of our planet. Every piece is crafted from premium recycled and organic fibers — from our silky-soft regenerated performance fabrics to our signature bamboo-lined gussets. Even our packaging is eco-friendly.
           </p>
         </motion.section>
@@ -56,7 +56,7 @@ export default function OurValues() {
           <h2 className={`${playfair.className} italic text-2xl md:text-3xl font-bold mb-4`} style={{ color: "#D4AF37" }}>
             OEKO-TEX Certified
           </h2>
-          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090" }}>
+          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090", fontFamily: "'Times New Roman', serif" }}>
             Our fabrics are OEKO-TEX certified — meaning every material used in our garments has been tested for harmful substances and meets the highest safety standards. We only put on your body what is safe, clean, and kind to the earth.
           </p>
         </motion.section>
@@ -72,8 +72,8 @@ export default function OurValues() {
           <h2 className={`${playfair.className} italic text-2xl md:text-3xl font-bold mb-4`} style={{ color: "#D4AF37" }}>
             Supporting Artists
           </h2>
-          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090" }}>
-            Every Princess Pirouette design starts with our own original concepts and mockups, brought to life through talented artists and pattern makers we partner with and fairly compensate — from sublimation artwork to vector designs.
+          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090", fontFamily: "'Times New Roman', serif" }}>
+            Every Princess Pirouette design starts with our own original concepts, brought to life through talented artists and pattern makers we partner with and fairly compensate — from sublimation artwork to vector designs.
           </p>
         </motion.section>
 
@@ -88,7 +88,7 @@ export default function OurValues() {
           <h2 className={`${playfair.className} italic text-2xl md:text-3xl font-bold mb-4`} style={{ color: "#D4AF37" }}>
             Our Promise to You
           </h2>
-          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090" }}>
+          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090", fontFamily: "'Times New Roman', serif" }}>
             Every decision we make — from the materials we choose to the artists we work with — is guided by our commitment to magic, sustainability, and inclusivity. Because the little princess inside everyone deserves a world that sparkles, inside and out.
           </p>
         </motion.section>

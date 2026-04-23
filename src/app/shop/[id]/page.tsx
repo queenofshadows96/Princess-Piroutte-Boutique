@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect, } from "react";
 import { motion } from "framer-motion";
 import { Great_Vibes, Playfair_Display } from "next/font/google";
 import { useCart } from "@/context/CartContext";
@@ -26,8 +26,8 @@ interface Product {
   category: string;
 }
 
-export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params);
+export default function ProductPage({ params }: { params: { id: string } }) {
+  const id = params.id;
   const { addToCart } = useCart();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);

@@ -84,8 +84,8 @@ export default function Contact() {
           >
             We Would Love to Hear From You
           </h2>
-          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090" }}>
-            Whether you have a question about sizing, a custom order request, or just want to say hello — we are here for you.
+          <p className="text-base md:text-lg leading-loose" style={{ color: "#C09090", fontFamily: "'Times New Roman', serif" }}>
+            Whether you have a question about sizing, fabrics, or just want to say hello — we are here for you.
           </p>
         </motion.section>
 
@@ -105,7 +105,7 @@ export default function Contact() {
               >
                 Thank You, Princess!
               </h2>
-              <p style={{ color: "#C09090" }}>
+              <p style={{ color: "#C09090", fontFamily: "'Times New Roman', serif" }}>
                 Your message has been received. We will be in touch with you shortly!
               </p>
             </div>
@@ -156,7 +156,7 @@ export default function Contact() {
                   <option value="">Select a subject...</option>
                   <option value="sizing">Sizing Question</option>
                   <option value="order">Order Inquiry</option>
-                  <option value="custom">Custom Order Request</option>
+                  <option value="custom"></option>
                   <option value="return">Return or Exchange</option>
                   <option value="other">Other</option>
                 </select>

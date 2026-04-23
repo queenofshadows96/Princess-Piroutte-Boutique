@@ -7,7 +7,11 @@ import { ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 
 const magnolia = Great_Vibes({ subsets: ["latin"], weight: ["400"] });
-const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400"], style: ["italic"] });
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["italic"],
+});
 
 const links = [
   { href: "/", label: "Home" },
@@ -25,7 +29,7 @@ export default function NavBar() {
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between"
+      className="fixed top-0 left-0 right-0 z-50 px-6 py-5 flex items-center justify-between"
       style={{
         backgroundColor: "rgba(255, 255, 255, 0.92)",
         backdropFilter: "blur(10px)",
@@ -34,23 +38,25 @@ export default function NavBar() {
     >
       <Link
         href="/"
-        className={`${magnolia.className} text-xl font-bold shrink-0 whitespace-nowrap`}
+        className={`${magnolia.className} text-2xl md:text-3xl font-bold shrink-0 whitespace-nowrap`}
         style={{ color: "#D4AF37" }}
       >
         Princess Pirouette Boutique
       </Link>
 
-      <div className="flex items-center gap-8 shrink-0">
+      <div className="flex items-center gap-6 shrink-0">
         {links.map(({ href, label }) => {
           const active = pathname === href;
           return (
             <Link
               key={href}
               href={href}
-              className={`${playfair.className} italic text-sm font-semibold transition-colors duration-200`}
+              className={`${playfair.className} italic text-base md:text-lg font-semibold transition-colors duration-200`}
               style={{
                 color: "#B8860B",
-                borderBottom: active ? "2px solid #FFD1DC" : "2px solid transparent",
+                borderBottom: active
+                  ? "2px solid #FFD1DC"
+                  : "2px solid transparent",
                 paddingBottom: "2px",
               }}
             >
@@ -64,7 +70,7 @@ export default function NavBar() {
           className="relative flex items-center transition-colors duration-200"
           style={{ color: "#B8860B" }}
         >
-          <ShoppingBag size={22} strokeWidth={1.8} />
+          <ShoppingBag size={26} strokeWidth={1.8} />
           {totalItems > 0 && (
             <span
               className="absolute -top-2 -right-2 flex items-center justify-center rounded-full text-white font-bold"
@@ -73,7 +79,7 @@ export default function NavBar() {
                 fontSize: "10px",
                 width: "18px",
                 height: "18px",
-              }}
+                }}
             >
               {totalItems > 9 ? "9+" : totalItems}
             </span>
