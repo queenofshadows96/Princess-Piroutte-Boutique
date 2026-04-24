@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
 
+export const dynamic = "force-dynamic";
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2026-03-25.dahlia",
 });
@@ -33,21 +35,27 @@ export async function POST(req: NextRequest) {
       const session = event.data.object as Stripe.Checkout.Session;
 
       const { error: insertError } = await supabase.from("orders").insert({
-  customer_email: session.customer_email,
-  customer_name: session.customer_details?.name ?? null,
-  shipping_address: session.customer_details?.address
-    ? JSON.stringify(session.customer_details.address)
-    : null,
-  total: session.amount_total ? session.amount_total / 100 : 0,
-  status: "paid",
-  stripe_payment_id: session.payment_intent
-    ? String(session.payment_intent)
-    : null,
-});
+        customer_email: session.customer_email,
+        customer_name: session.customer_details?.name ?? null,
+        shipping_address: session.customer_details?.address
+          ? JSON.stringify(session.customer_details.address)
+          : null,
+        total: session.amount_total ? session.amount_total / 100 : 0,
+        status: "paid",
+        stripe_payment_id: session.payment_intent
+          ? String(session.payment_intent)
+          : null,
+
+        // ⭐ NEW FIELD — saves the selected size
+        size: session.metadata?.size ?? null,
+      });
 
       if (insertError) {
         console.error("Supabase insert error:", insertError);
-        return NextResponse.json({ error: "Order save failed" }, { status: 500 });
+        return NextResponse.json(
+          { error: "Order save failed" },
+          { status: 500 }
+        );
       }
     } catch (err) {
       console.error("Order save error:", err);
