@@ -9,22 +9,22 @@ export async function POST(req: NextRequest) {
   try {
     const { items, customerEmail } = await req.json();
 
-    const lineItems = [
-      ...items.map((item: any) => ({
-        price_data: {
-          currency: "usd",
-          product_data: {
-            name: item.name,
-            description: item.size ? `Size: ${item.size}` : undefined,
-          },
-          unit_amount: Math.round(
-            parseFloat(String(item.price).replace(/[^0-9.]/g, "")) * 100
-          ),
+    // Build Stripe line items
+    const lineItems = items.map((item: any) => ({
+      price_data: {
+        currency: "usd",
+        product_data: {
+          name: item.name,
+          description: item.size ? `Size: ${item.size}` : undefined,
         },
-        quantity: item.quantity,
-      })),
-    ];
+        unit_amount: Math.round(
+          parseFloat(String(item.price).replace(/[^0-9.]/g, "")) * 100
+        ),
+      },
+      quantity: item.quantity,
+    }));
 
+    // Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: lineItems,
@@ -36,10 +36,17 @@ export async function POST(req: NextRequest) {
       success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/cancel`,
 
-      // ⭐ NEW: Pass size into Stripe metadata
+      // ⭐ SEND FULL ITEM DATA TO STRIPE METADATA
       metadata: {
-        items: JSON.stringify(items),
-        size: items[0]?.size ?? null, // <-- this is the chosen size
+        items: JSON.stringify(
+          items.map((item: any) => ({
+            product_id: item.id,     // <-- REAL product ID from your Shop page
+            name: item.name,
+            size: item.size,
+            quantity: item.quantity,
+            price: item.price,
+          }))
+        ),
       },
     });
 
