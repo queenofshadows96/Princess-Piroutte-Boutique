@@ -21,7 +21,7 @@ export default function FloatingBackground() {
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: Math.random() * 16 + 12,
+      size: Math.random() * 10 + 12,
       duration: Math.random() * 6 + 8,
       delay: Math.random() * 5,
       opacity: Math.random() * 0.30 + 0.24,
