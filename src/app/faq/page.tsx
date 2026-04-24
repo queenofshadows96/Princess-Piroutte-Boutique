@@ -18,16 +18,24 @@ const faqs = [
     answer: "We carry sizes XS through XL. Please visit our Sizing Guide page for detailed measurements to find your perfect fit!",
   },
   {
+    question: "Will you be adding more leotard designs or other products?",
+    answer: "Yes, we are currently working on more designs and hope to expand our product line! Stay tuned for updates!",
+  },
+  {
     question: "What are your leotards made of?",
-    answer: "Our leotards are made with professional-grade 210 GSM Recycled Matte Nylon/Lycra, with a bamboo gusset lining — thicker and more supportive than standard streetwear, providing a sculpted feel while being gentle on the earth.",
+    answer: "Our leotards are made with professional-grade 210 GSM Recycled Matte Nylon/Lycra, with a bamboo crotch lining — thicker and more supportive than standard streetwear, providing a sculpted feel while being gentle on the earth.",
   },
   {
     question: "Are your products sustainable?",
-    answer: "Yes! We are committed to mindful luxury. We use premium recycled and organic fibers, and even our packaging is eco-friendly.",
+    answer: "Yes! We are committed to mindful luxury. We use premium recycled and organic fibers, that are GRS and OEKO-TEX certified. Even our packaging is compostible.",
   },
   {
     question: "How long does shipping take?",
-    answer: "Standard shipping takes 5-7 business days. You will receive a tracking number once your order has shipped.",
+    answer: "Production Time takes 4-6 weeks. Standard US shipping takes 3-7 business days. You will receive a tracking number once your order has shipped.",
+  },
+  {
+    question: "Why is there a wait for my order?",
+    answer: "To ensure every Princess Pirouette leotard meets our standards for quality and sustainability, we operate on a small-batch craftsmanship model. By producing in smaller quantities rather than mass-market volumes, we eliminate overproduction and focus on using premium, recycled materials. We appreciate your patience in helping us keep the dance world a little more magical—and a lot more sustainable!",
   },
   {
     question: "What is your return policy?",

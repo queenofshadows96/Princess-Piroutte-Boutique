@@ -13,10 +13,13 @@ const playfair = Playfair_Display({
   style: ["italic"],
 });
 
+// LINKS
 const links = [
   { href: "/", label: "Home" },
   { href: "/shop", label: "Shop" },
   { href: "/sizing-guide", label: "Sizing Guide" },
+  { href: "/shipping", label: "Shipping" },
+  { href: "/returns", label: "Returns" },
   { href: "/faq", label: "FAQ" },
   { href: "/about", label: "About" },
   { href: "/values", label: "Our Values" },
@@ -29,29 +32,36 @@ export default function NavBar() {
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 px-6 py-5 flex items-center justify-between"
+      className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between"
       style={{
         backgroundColor: "rgba(255, 255, 255, 0.92)",
         backdropFilter: "blur(10px)",
         borderBottom: "1px solid rgba(255, 209, 220, 0.45)",
       }}
     >
-      <Link
-        href="/"
-        className={`${magnolia.className} text-2xl md:text-3xl font-bold shrink-0 whitespace-nowrap`}
-        style={{ color: "#D4AF37" }}
-      >
-        Princess Pirouette Boutique
-      </Link>
+      {/* LOGO + BRAND NAME */}
+      <div className="flex items-center gap-3 shrink-0">
+        {/* Placeholder for future logo */}
+        <div className="w-10 h-10 rounded-full bg-[#D4AF37] opacity-70" />
 
-      <div className="flex items-center gap-6 shrink-0">
+        <Link
+          href="/"
+          className={`${magnolia.className} text-xl md:text-2xl font-bold whitespace-nowrap`}
+          style={{ color: "#D4AF37" }}
+        >
+          Princess Pirouette Boutique
+        </Link>
+      </div>
+
+      {/* NAV LINKS */}
+      <div className="flex items-center gap-4 shrink-0">
         {links.map(({ href, label }) => {
           const active = pathname === href;
           return (
             <Link
               key={href}
               href={href}
-              className={`${playfair.className} italic text-base md:text-lg font-semibold transition-colors duration-200`}
+              className={`${playfair.className} italic text-sm md:text-base font-semibold transition-colors duration-200`}
               style={{
                 color: "#B8860B",
                 borderBottom: active
@@ -65,12 +75,13 @@ export default function NavBar() {
           );
         })}
 
+        {/* CART ICON */}
         <Link
           href="/checkout"
           className="relative flex items-center transition-colors duration-200"
           style={{ color: "#B8860B" }}
         >
-          <ShoppingBag size={26} strokeWidth={1.8} />
+          <ShoppingBag size={24} strokeWidth={1.8} />
           {totalItems > 0 && (
             <span
               className="absolute -top-2 -right-2 flex items-center justify-center rounded-full text-white font-bold"
@@ -79,7 +90,7 @@ export default function NavBar() {
                 fontSize: "10px",
                 width: "18px",
                 height: "18px",
-                }}
+              }}
             >
               {totalItems > 9 ? "9+" : totalItems}
             </span>

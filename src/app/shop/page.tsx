@@ -153,7 +153,7 @@ export default function Shop() {
                         >
                           {product.name}
                         </h3>
-                        <p className="text-sm leading-relaxed mb-4" style={{ color: "#C09090" }}>
+                        <p className="text-sm leading-relaxed mb-4" style={{ color: "#C09090", fontFamily: "'Times New Roman', serif" }}>
                           {product.description.slice(0, 120)}...
                         </p>
 

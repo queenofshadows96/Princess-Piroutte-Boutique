@@ -204,7 +204,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
               >
                 About This Piece
               </h2>
-              <p className="text-sm leading-loose whitespace-pre-line" style={{ color: "#C09090" }}>
+              <p className="text-sm leading-loose whitespace-pre-line" style={{ color: "#C09090", fontFamily: "'Times New Roman', serif" }}>
                 {product.description}
               </p>
             </div>

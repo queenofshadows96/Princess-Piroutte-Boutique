@@ -19,11 +19,11 @@ All requirements have been implemented and are ready for integration configurati
 
 - General UI style:
   - ✅ No emojis in the UI.
-  - ✅ Elegant SVG crown graphic implemented for Navbar and Values section.
+  - ✅ Elegant SVG crown graphic implemented for NavBar and Values section.
 
 ## Layout & Components - ✅ IMPLEMENTED
 
-- **Navbar**:
+- **NavBar**:
   - ✅ Links: Home, Shop, Sizing Guide, FAQ, About, Our Values, Contact.
   - ✅ Includes cart icon with item count.
   - ✅ SVG crown icon (no emojis).

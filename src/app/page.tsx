@@ -181,7 +181,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTER */}
+      {/* FOOTER **/}
       <footer
         className="relative z-10 py-10 px-6 text-center"
         style={{

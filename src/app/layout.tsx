@@ -10,7 +10,7 @@ const greatVibes = Great_Vibes({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-great-vibes",
-});
+}); 
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
