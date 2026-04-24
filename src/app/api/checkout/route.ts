@@ -5,7 +5,6 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2026-03-25.dahlia",
 });
 
-
 export async function POST(req: NextRequest) {
   try {
     const { items, customerEmail } = await req.json();
@@ -18,11 +17,12 @@ export async function POST(req: NextRequest) {
             name: item.name,
             description: item.size ? `Size: ${item.size}` : undefined,
           },
-          unit_amount: Math.round(parseFloat(String(item.price).replace(/[^0-9.]/g, "")) * 100),
+          unit_amount: Math.round(
+            parseFloat(String(item.price).replace(/[^0-9.]/g, "")) * 100
+          ),
         },
         quantity: item.quantity,
       })),
-      
     ];
 
     const session = await stripe.checkout.sessions.create({
@@ -35,14 +35,23 @@ export async function POST(req: NextRequest) {
       },
       success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/cancel`,
+
+      // ⭐ NEW: Pass size into Stripe metadata
       metadata: {
         items: JSON.stringify(items),
+        size: items[0]?.size ?? null, // <-- this is the chosen size
       },
     });
 
     return NextResponse.json({ url: session.url });
   } catch (error) {
-    console.error("Stripe error:", error instanceof Error ? error.message : error);
-    return NextResponse.json({ error: "Payment failed" }, { status: 500 });
+    console.error(
+      "Stripe error:",
+      error instanceof Error ? error.message : error
+    );
+    return NextResponse.json(
+      { error: "Payment failed" },
+      { status: 500 }
+    );
   }
 }
