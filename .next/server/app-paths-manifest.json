@@ -1,5 +1,10 @@
 {
+  "/page": "app/page.js",
   "/shipping/page": "app/shipping/page.js",
   "/returns/page": "app/returns/page.js",
-  "/page": "app/page.js"
+  "/faq/page": "app/faq/page.js",
+  "/about/page": "app/about/page.js",
+  "/sizing-guide/page": "app/sizing-guide/page.js",
+  "/contact/page": "app/contact/page.js",
+  "/values/page": "app/values/page.js"
 }
