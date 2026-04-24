@@ -34,28 +34,55 @@ export async function POST(req: NextRequest) {
     try {
       const session = event.data.object as Stripe.Checkout.Session;
 
-      const { error: insertError } = await supabase.from("orders").insert({
-        customer_email: session.customer_email,
-        customer_name: session.customer_details?.name ?? null,
-        shipping_address: session.customer_details?.address
-          ? JSON.stringify(session.customer_details.address)
-          : null,
-        total: session.amount_total ? session.amount_total / 100 : 0,
-        status: "paid",
-        stripe_payment_id: session.payment_intent
-          ? String(session.payment_intent)
-          : null,
+      // ⭐ Parse cart items from metadata
+      const items = session.metadata?.items
+        ? JSON.parse(session.metadata.items)
+        : [];
 
-        // ⭐ NEW FIELD — saves the selected size
-        size: session.metadata?.size ?? null,
-      });
+      // ⭐ Insert into orders table
+      const { data: orderData, error: orderError } = await supabase
+        .from("orders")
+        .insert({
+          customer_email: session.customer_email,
+          customer_name: session.customer_details?.name ?? null,
+          shipping_address: session.customer_details?.address
+            ? JSON.stringify(session.customer_details.address)
+            : null,
+          total: session.amount_total ? session.amount_total / 100 : 0,
+          status: "paid",
+          stripe_payment_id: session.payment_intent
+            ? String(session.payment_intent)
+            : null,
+          size: null, // no single size anymore — handled per item
+        })
+        .select("id")
+        .single();
 
-      if (insertError) {
-        console.error("Supabase insert error:", insertError);
+      if (orderError) {
+        console.error("Supabase order insert error:", orderError);
         return NextResponse.json(
           { error: "Order save failed" },
           { status: 500 }
         );
+      }
+
+      const orderId = orderData.id;
+
+      // ⭐ Insert each item into order_items
+      for (const item of items) {
+        const { error: itemError } = await supabase
+          .from("order_items")
+          .insert({
+            order_id: orderId,
+            product_id: item.product_id ?? null,
+            quantity: item.quantity,
+            price: item.price,
+            size: item.size ?? null,
+          });
+
+        if (itemError) {
+          console.error("Supabase order_items insert error:", itemError);
+        }
       }
     } catch (err) {
       console.error("Order save error:", err);
