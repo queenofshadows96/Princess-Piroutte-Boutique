@@ -69,7 +69,6 @@ export async function POST(req: NextRequest) {
             ? String(session.payment_intent)
             : null,
 
-          size: null, // no single size anymore — handled per item
         })
         .select("id")
         .single();
