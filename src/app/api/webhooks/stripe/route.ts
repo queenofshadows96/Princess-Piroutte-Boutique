@@ -6,12 +6,6 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const preferredRegion = "auto";
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2026-03-25.dahlia",
 });
@@ -22,6 +16,7 @@ const supabase = createClient(
 );
 
 export async function POST(req: NextRequest) {
+  // ⭐ Get raw body for Stripe signature verification
   const body = await req.text();
   const signature = req.headers.get("stripe-signature")!;
 
@@ -38,14 +33,17 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Webhook failed" }, { status: 400 });
   }
 
+  // ⭐ Handle checkout completion
   if (event.type === "checkout.session.completed") {
     try {
       const session = event.data.object as Stripe.Checkout.Session;
 
+      // ⭐ Parse cart items from metadata
       const items = session.metadata?.items
         ? JSON.parse(session.metadata.items)
         : [];
 
+      // ⭐ Extract shipping address from collected_information
       const shippingAddress =
         session.collected_information?.shipping_details?.address
           ? JSON.stringify(
@@ -53,6 +51,7 @@ export async function POST(req: NextRequest) {
             )
           : null;
 
+      // ⭐ Insert order into Supabase
       const { data: orderData, error: orderError } = await supabase
         .from("orders")
         .insert({
@@ -61,13 +60,16 @@ export async function POST(req: NextRequest) {
             session.customer_details?.name ??
             session.customer_email ??
             null,
+
           shipping_address: shippingAddress,
+
           total: session.amount_total ? session.amount_total / 100 : 0,
           status: "paid",
           stripe_payment_id: session.payment_intent
             ? String(session.payment_intent)
             : null,
-          size: null,
+
+          size: null, // no single size anymore — handled per item
         })
         .select("id")
         .single();
@@ -82,6 +84,7 @@ export async function POST(req: NextRequest) {
 
       const orderId = orderData.id;
 
+      // ⭐ Insert each item into order_items
       for (const item of items) {
         const { error: itemError } = await supabase
           .from("order_items")
