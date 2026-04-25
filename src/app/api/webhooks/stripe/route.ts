@@ -89,7 +89,7 @@ export async function POST(req: NextRequest) {
           .from("order_items")
           .insert({
             order_id: orderId,
-            product_id: item.product_id ?? null,
+            product_id: item.id ?? null,
             quantity: item.quantity,
             price: item.price,
             size: item.size ?? null,
