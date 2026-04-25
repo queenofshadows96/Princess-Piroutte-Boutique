@@ -5,7 +5,7 @@ import { createContext, useContext, useState, ReactNode } from "react";
 interface CartItem {
   id: number;
   name: string;
-  price: number;
+  price: number; // always a number
   quantity: number;
   size: string;
   emoji: string;
@@ -66,13 +66,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
 
-  const totalPrice = items.reduce((sum, item) => {
-    const price =
-      typeof item.price === "string"
-        ? parseFloat(item.price.replace("$", ""))
-        : item.price;
-    return sum + price * item.quantity;
-  }, 0);
+  // ⭐ CLEAN FIX — price is ALWAYS a number, no parsing needed
+  const totalPrice = items.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
 
   return (
     <CartContext.Provider
