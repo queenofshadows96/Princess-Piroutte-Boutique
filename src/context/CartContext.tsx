@@ -15,8 +15,8 @@ interface CartItem {
 interface CartContextType {
   items: CartItem[];
   addToCart: (item: Omit<CartItem, "quantity">) => void;
-  removeFromCart: (id: number) => void;
-  updateQuantity: (id: number, quantity: number) => void;
+  removeFromCart: (id: number, size: string) => void;
+  updateQuantity: (id: number, size: string, quantity: number) => void;
   clearCart: () => void;
   totalItems: number;
   totalPrice: number;
@@ -29,7 +29,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const addToCart = (newItem: Omit<CartItem, "quantity">) => {
     setItems((prev) => {
-      const existing = prev.find((i) => i.id === newItem.id && i.size === newItem.size);
+      const existing = prev.find(
+        (i) => i.id === newItem.id && i.size === newItem.size
+      );
       if (existing) {
         return prev.map((i) =>
           i.id === newItem.id && i.size === newItem.size
@@ -41,32 +43,49 @@ export function CartProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const removeFromCart = (id: number) => {
-    setItems((prev) => prev.filter((i) => i.id !== id));
+  const removeFromCart = (id: number, size: string) => {
+    setItems((prev) =>
+      prev.filter((i) => !(i.id === id && i.size === size))
+    );
   };
 
-  const updateQuantity = (id: number, quantity: number) => {
+  const updateQuantity = (id: number, size: string, quantity: number) => {
     if (quantity <= 0) {
-      removeFromCart(id);
+      removeFromCart(id, size);
       return;
     }
+
     setItems((prev) =>
-      prev.map((i) => (i.id === id ? { ...i, quantity } : i))
+      prev.map((i) =>
+        i.id === id && i.size === size ? { ...i, quantity } : i
+      )
     );
   };
 
   const clearCart = () => setItems([]);
 
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
+
   const totalPrice = items.reduce((sum, item) => {
-    const price = typeof item.price === "string"
-      ? parseFloat((item.price as string).replace("$", ""))
-      : item.price;
+    const price =
+      typeof item.price === "string"
+        ? parseFloat(item.price.replace("$", ""))
+        : item.price;
     return sum + price * item.quantity;
   }, 0);
 
   return (
-    <CartContext.Provider value={{ items, addToCart, removeFromCart, updateQuantity, clearCart, totalItems, totalPrice }}>
+    <CartContext.Provider
+      value={{
+        items,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        clearCart,
+        totalItems,
+        totalPrice,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
