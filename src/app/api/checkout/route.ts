@@ -16,7 +16,6 @@ const supabase = createClient(
 );
 
 export async function POST(req: NextRequest) {
-  // ⭐ RAW BODY FOR STRIPE SIGNATURE
   const body = await req.text();
   const signature = req.headers.get("stripe-signature")!;
 
@@ -33,22 +32,21 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
-  // ⭐ HANDLE CHECKOUT SESSION COMPLETED
   if (event.type === "checkout.session.completed") {
     try {
       const session = event.data.object as Stripe.Checkout.Session;
 
-      // ⭐ PARSE ITEMS FROM METADATA
       const items = session.metadata?.items
         ? JSON.parse(session.metadata.items)
         : [];
 
-      // ⭐ CORRECT SHIPPING FIELD FOR CHECKOUT SESSIONS
-      const shippingAddress = session.shipping_details?.address
-        ? JSON.stringify(session.shipping_details.address)
+      // ⭐ FIXED: TypeScript-safe access to shipping_details
+      const shipping = (session as any).shipping_details;
+
+      const shippingAddress = shipping?.address
+        ? JSON.stringify(shipping.address)
         : null;
 
-      // ⭐ INSERT ORDER INTO SUPABASE
       const { data: orderData, error: orderError } = await supabase
         .from("orders")
         .insert({
@@ -66,7 +64,7 @@ export async function POST(req: NextRequest) {
             ? String(session.payment_intent)
             : null,
 
-          size: null, // no single size — handled per item
+          size: null,
         })
         .select("id")
         .single();
@@ -81,7 +79,6 @@ export async function POST(req: NextRequest) {
 
       const orderId = orderData.id;
 
-      // ⭐ INSERT EACH ITEM INTO order_items
       for (const item of items) {
         const { error: itemError } = await supabase
           .from("order_items")
@@ -109,4 +106,3 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({ received: true });
 }
-
