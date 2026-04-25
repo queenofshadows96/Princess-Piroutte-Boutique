@@ -44,16 +44,24 @@ export async function POST(req: NextRequest) {
         .from("orders")
         .insert({
           customer_email: session.customer_email,
-          customer_name: session.customer_details?.name ?? null,
+          customer_name:
+            session.customer_details?.name ??
+            session.customer_email ??
+            null,
+
+          // ⭐ Safe shipping address handling
           shipping_address: session.customer_details?.address
             ? JSON.stringify(session.customer_details.address)
             : null,
+
           total: session.amount_total ? session.amount_total / 100 : 0,
           status: "paid",
           stripe_payment_id: session.payment_intent
             ? String(session.payment_intent)
             : null,
-          size: null, // no single size anymore — handled per item
+
+          // No single size — handled per item
+          size: null,
         })
         .select("id")
         .single();
