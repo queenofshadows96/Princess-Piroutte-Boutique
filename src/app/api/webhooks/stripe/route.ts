@@ -39,6 +39,14 @@ export async function POST(req: NextRequest) {
         ? JSON.parse(session.metadata.items)
         : [];
 
+      // ⭐ Extract shipping address from collected_information (your Stripe event uses this)
+      const shippingAddress =
+        session.collected_information?.shipping_details?.address
+          ? JSON.stringify(
+              session.collected_information.shipping_details.address
+            )
+          : null;
+
       // ⭐ Insert into orders table
       const { data: orderData, error: orderError } = await supabase
         .from("orders")
@@ -49,10 +57,7 @@ export async function POST(req: NextRequest) {
             session.customer_email ??
             null,
 
-          // ⭐ Safe shipping address handling
-          shipping_address: session.customer_details?.address
-            ? JSON.stringify(session.customer_details.address)
-            : null,
+          shipping_address: shippingAddress,
 
           total: session.amount_total ? session.amount_total / 100 : 0,
           status: "paid",
@@ -60,8 +65,7 @@ export async function POST(req: NextRequest) {
             ? String(session.payment_intent)
             : null,
 
-          // No single size — handled per item
-          size: null,
+          size: null, // no single size anymore — handled per item
         })
         .select("id")
         .single();
