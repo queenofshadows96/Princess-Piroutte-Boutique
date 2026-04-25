@@ -15,7 +15,7 @@ const playfair = Playfair_Display({
 export default function Home() {
   return (
     <main className="relative">
-      {/* HERO SECTION */}
+      {/* HERO SECTION! */}
       <section className="relative z-10 flex flex-col items-center justify-center min-h-[80vh] px-6 text-center py-16">
         <motion.h1
           className={`${magnolia.className} text-5xl md:text-6xl font-black mb-10 leading-tight`}
