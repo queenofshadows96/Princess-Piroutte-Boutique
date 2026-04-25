@@ -2,7 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
 
+export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+export const preferredRegion = "auto";
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2026-03-25.dahlia",
@@ -34,12 +42,10 @@ export async function POST(req: NextRequest) {
     try {
       const session = event.data.object as Stripe.Checkout.Session;
 
-      // ⭐ Parse cart items from metadata
       const items = session.metadata?.items
         ? JSON.parse(session.metadata.items)
         : [];
 
-      // ⭐ Extract shipping address from collected_information (your Stripe event uses this)
       const shippingAddress =
         session.collected_information?.shipping_details?.address
           ? JSON.stringify(
@@ -47,7 +53,6 @@ export async function POST(req: NextRequest) {
             )
           : null;
 
-      // ⭐ Insert into orders table
       const { data: orderData, error: orderError } = await supabase
         .from("orders")
         .insert({
@@ -56,16 +61,13 @@ export async function POST(req: NextRequest) {
             session.customer_details?.name ??
             session.customer_email ??
             null,
-
           shipping_address: shippingAddress,
-
           total: session.amount_total ? session.amount_total / 100 : 0,
           status: "paid",
           stripe_payment_id: session.payment_intent
             ? String(session.payment_intent)
             : null,
-
-          size: null, // no single size anymore — handled per item
+          size: null,
         })
         .select("id")
         .single();
@@ -80,7 +82,6 @@ export async function POST(req: NextRequest) {
 
       const orderId = orderData.id;
 
-      // ⭐ Insert each item into order_items
       for (const item of items) {
         const { error: itemError } = await supabase
           .from("order_items")
