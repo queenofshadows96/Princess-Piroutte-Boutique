@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* -------------------------------------------
+   1. BOUTIQUE GLOBAL VARIABLES
+------------------------------------------- */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -48,10 +51,14 @@
     --ring: 212.7 26.8% 83.9%;
   }
 }
+
 body {
   background-color: #FFF5F7;
 }
 
+/* -------------------------------------------
+   2. BOUTIQUE ANIMATIONS & CARDS
+------------------------------------------- */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-12px); }
@@ -82,12 +89,108 @@ body {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
 }
 
-.value-card::before,
-.value-card::after {
-  content: none !important;
-  display: none !important;
-}
-
 .value-card p {
   color: #C09090 !important;
 }
+
+/* -------------------------------------------
+   3. BROADCAST EDITOR - FULL THEME FIXES
+------------------------------------------- */
+
+/* Force hide Quill default SVGs to avoid double-image icon bug */
+.ql-toolbar.ql-snow button svg {
+  display: none !important;
+}
+
+/* Main Toolbar Row Styling */
+.ql-toolbar.ql-snow {
+  border: 2px solid #D4AF37 !important;
+  border-radius: 12px 12px 0 0;
+  background: #fff9fb !important;
+  padding: 10px 12px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+/* Force fix for Pickers (Dropdowns) sitting awkwardly */
+.ql-snow .ql-picker {
+  height: 34px !important;
+  border: 1px solid #D4AF37 !important;
+  border-radius: 8px !important;
+  background: white !important;
+  color: #b07a7a !important;
+  font-family: var(--font-playfair), serif !important;
+  font-weight: bold;
+  width: 110px !important;
+  margin-right: 4px;
+}
+
+.ql-snow .ql-picker-label {
+  padding: 0 8px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Toolbar Buttons Appearance */
+.ql-toolbar.ql-snow button {
+  text-indent: 0 !important;
+  width: auto !important;
+  height: 34px !important;
+  padding: 0 12px !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-playfair), serif !important;
+  font-weight: bold !important;
+  font-size: 13px !important;
+  border-radius: 8px !important;
+  border: 1px solid #D4AF37 !important;
+  color: #b07a7a !important;
+  background: white !important;
+  transition: all 0.2s ease !important;
+}
+
+.ql-toolbar button:hover {
+  background: #fff3d9 !important;
+  color: #8b5a2b !important;
+}
+
+/* Specific button content content (Emojis) */
+.ql-toolbar button.ql-undo::after { content: "↺"; font-size: 16px; }
+.ql-toolbar button.ql-redo::after { content: "↻"; font-size: 16px; }
+.ql-toolbar button.ql-bold::after { content: "B"; font-size: 16px; font-family: serif; }
+.ql-toolbar button.ql-image::after { content: "🖼"; font-size: 16px; }
+
+/* Boutique Color button highlights */
+.ql-toolbar button.ql-gold { color: #D4AF37 !important; }
+.ql-toolbar button.ql-pink { color: #C09090 !important; border-color: #C09090 !important; }
+.ql-toolbar button.ql-grey { color: #444444 !important; border-color: #444444 !important; }
+
+/* Editor Main Container */
+.ql-container.ql-snow {
+  border: 2px solid #D4AF37 !important;
+  border-radius: 0 0 12px 12px;
+  background: white;
+  min-height: 400px;
+}
+
+.ql-editor {
+  font-family: "Times New Roman", Georgia, serif;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #444444;
+  padding: 20px !important;
+}
+
+/* FONT SELECTION RENDERING (MAPS SELECTS TO LAYOUT.TSX VARIABLES) */
+.ql-editor .ql-font-playfair { font-family: var(--font-playfair), serif !important; }
+.ql-editor .ql-font-greatvibes { font-family: var(--font-great-vibes), cursive !important; }
+.ql-editor .ql-font-times { font-family: "Times New Roman", serif !important; }
+
+/* SIZE SELECTION RENDERING */
+.ql-editor .ql-size-1em { font-size: 1em !important; }
+.ql-editor .ql-size-1\.4em { font-size: 1.4em !important; }
+.ql-editor .ql-size-1\.8em { font-size: 1.8em !important; }

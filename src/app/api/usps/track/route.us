@@ -1,0 +1,29 @@
+import { NextResponse } from "next/server";
+import xml2js from "xml2js";
+
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const number = searchParams.get("number");
+
+  if (!number) {
+    return NextResponse.json({ error: "Missing tracking number" }, { status: 400 });
+  }
+
+  try {
+    // USPS Web Tools API call
+    const uspsRes = await fetch(
+      `https://secure.shippingapis.com/ShippingAPI.dll?API=TrackV2&XML=<TrackRequest USERID="${process.env.USPS_USER_ID}"><TrackID ID="${number}"></TrackID></TrackRequest>`
+    );
+    const xml = await uspsRes.text();
+
+    // Parse XML for <ExpectedDeliveryDate>
+    const parsed = await xml2js.parseStringPromise(xml, { explicitArray: false });
+    const trackInfo = parsed?.TrackResponse?.TrackInfo;
+    const estimatedDelivery = trackInfo?.ExpectedDeliveryDate || null;
+
+    return NextResponse.json({ estimatedDelivery });
+  } catch (err) {
+    console.error("USPS tracking fetch error:", err);
+    return NextResponse.json({ error: "Failed to fetch USPS data" }, { status: 500 });
+  }
+}

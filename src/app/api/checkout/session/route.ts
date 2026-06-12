@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2026-03-25.dahlia",
+  apiVersion: "2026-03-25.dahlia", // Matches your specific required version
 });
 
 export async function GET(request: NextRequest) {
@@ -13,8 +13,10 @@ export async function GET(request: NextRequest) {
   }
 
   try {
+    // ⭐ FIX: Removed 'shipping_details' from expand. It is not an expandable property.
+    // It is already included in the session object by default if data was collected.
     const session = await stripe.checkout.sessions.retrieve(sessionId, {
-      expand: ["line_items"],
+      expand: ["line_items", "payment_intent"],
     });
 
     const paymentIntentId =
@@ -22,11 +24,21 @@ export async function GET(request: NextRequest) {
         ? session.payment_intent
         : (session.payment_intent?.id ?? null);
 
+    // ⭐ FIX: Data extraction fallback
+    // We check both shipping_details and customer_details just in case.
+    const shippingAddress = session.shipping_details?.address || session.customer_details?.address || null;
+    const shippingName = session.shipping_details?.name || session.customer_details?.name || "Guest";
+
     return NextResponse.json({
       paymentIntentId,
       amountTotal: session.amount_total,
       customerEmail: session.customer_details?.email ?? session.customer_email,
-      customerName: session.customer_details?.name,
+      customerName: shippingName,
+      
+      // ⭐ RETURN THE DATA:
+      shippingAddress: shippingAddress,
+      shippingName: shippingName,
+      
       created: session.created,
       lineItems: session.line_items?.data.map((item) => ({
         description: item.description,

@@ -1,10 +1,17 @@
 {
-  "/page": "app/page.js",
-  "/shipping/page": "app/shipping/page.js",
-  "/returns/page": "app/returns/page.js",
-  "/faq/page": "app/faq/page.js",
-  "/about/page": "app/about/page.js",
-  "/sizing-guide/page": "app/sizing-guide/page.js",
-  "/contact/page": "app/contact/page.js",
-  "/values/page": "app/values/page.js"
+  "/not-found": "app/not-found.js",
+  "/api/fulfillment/dashboard/overview/route": "app/api/fulfillment/dashboard/overview/route.js",
+  "/(fulfillment)/fulfillment/orders/[id]/page": "app/(fulfillment)/fulfillment/orders/[id]/page.js",
+  "/api/fulfillment/dashboard/shipped-not-delivered/route": "app/api/fulfillment/dashboard/shipped-not-delivered/route.js",
+  "/api/fulfillment/dashboard/pending-shipments/route": "app/api/fulfillment/dashboard/pending-shipments/route.js",
+  "/api/fulfillment/dashboard/unfulfilled-orders/route": "app/api/fulfillment/dashboard/unfulfilled-orders/route.js",
+  "/api/fulfillment/dashboard/missing-product-data/route": "app/api/fulfillment/dashboard/missing-product-data/route.js",
+  "/api/fulfillment/dashboard/orders-with-gift-messages/route": "app/api/fulfillment/dashboard/orders-with-gift-messages/route.js",
+  "/api/fulfillment/dashboard/delivered-shipments/route": "app/api/fulfillment/dashboard/delivered-shipments/route.js",
+  "/api/fulfillment/dashboard/orders-with-notes/route": "app/api/fulfillment/dashboard/orders-with-notes/route.js",
+  "/(fulfillment)/fulfillment/orders/page": "app/(fulfillment)/fulfillment/orders/page.js",
+  "/api/fulfillment/orders/route": "app/api/fulfillment/orders/route.js",
+  "/(fulfillment)/fulfillment/dashboard/page": "app/(fulfillment)/fulfillment/dashboard/page.js",
+  "/api/fulfillment/orders/[id]/route": "app/api/fulfillment/orders/[id]/route.js",
+  "/(public)/page": "app/(public)/page.js"
 }

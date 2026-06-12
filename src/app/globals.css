@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* -------------------------------------------
+   1. BOUTIQUE GLOBAL VARIABLES
+------------------------------------------- */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -24,13 +27,6 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
-
-    /* Princess Pirouette color variables */
-    --color-gold-light: #D4AF37;
-    --color-gold-dark: #B8860B;
-    --color-pink-accent: #FFD1DC;
-    --color-pink-bg: #FFF5F7;
-    --color-body-text: #C09090;
   }
 
   .dark {
@@ -54,49 +50,15 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }
-
-  * {
-    @apply border-border;
-  }
-
-  html {
-    @apply scroll-smooth;
-  }
-
-  body {
-  @apply antialiased;
-  background-color: #FFF5F7;
 }
 
-  /* Typography */
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-playfair;
-  }
-
-  h1, h2, h3 {
-    @apply text-gold-dark;
-  }
-
-  /* Card styling */
-  .card-accent {
-    @apply border-2 border-gold-dark bg-white rounded-lg;
-  }
-
-  /* Button styling */
-  .btn-primary {
-    @apply px-6 py-2 rounded-lg font-playfair italic font-semibold transition-all duration-200;
-    background-color: var(--color-gold-light);
-    color: white;
-  }
-
-  .btn-primary:hover {
-    background-color: var(--color-gold-dark);
-  }
-}
 body {
   background-color: #FFF5F7;
 }
 
+/* -------------------------------------------
+   2. BOUTIQUE ANIMATIONS & CARDS
+------------------------------------------- */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-12px); }
@@ -127,12 +89,174 @@ body {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
 }
 
-.value-card::before,
-.value-card::after {
-  content: none !important;
+.value-card p {
+  color: #C09090 !important;
+}
+
+/* -------------------------------------------
+   3. BROADCAST EDITOR - THEME & LAYOUT FIXES
+------------------------------------------- */
+
+/* Fix: Remove original Quill SVGs so they don't overlap our icons */
+.ql-toolbar.ql-snow button svg {
   display: none !important;
 }
 
-.value-card p {
-  color: #C09090 !important;
+/* The Toolbar Container */
+.ql-toolbar.ql-snow {
+  border: 2px solid #D4AF37 !important;
+  border-radius: 12px 12px 0 0;
+  background: #fff9fb !important;
+  padding: 10px 12px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+/* Dropdown Pickers Container Logic */
+.ql-formats {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+/* Label Dropdowns so they aren't blank */
+.ql-formats:has(.ql-font)::before {
+  content: "Font:";
+  font-weight: bold;
+  color: #b07a7a;
+  font-size: 13px;
+  font-family: var(--font-playfair), serif;
+}
+
+.ql-formats:has(.ql-size)::before {
+  content: "Size:";
+  font-weight: bold;
+  color: #b07a7a;
+  font-size: 13px;
+  font-family: var(--font-playfair), serif;
+}
+
+/* Style the Dropdown Pickers */
+.ql-snow .ql-picker {
+  height: 34px !important;
+  border: 1px solid #D4AF37 !important;
+  border-radius: 8px !important;
+  background: white !important;
+  color: #b07a7a !important;
+  font-family: var(--font-playfair), serif !important;
+  font-weight: bold;
+  width: 110px !important;
+}
+
+.ql-snow .ql-picker-label {
+  padding: 0 8px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ql-snow .ql-picker-options {
+  border: 1px solid #D4AF37 !important;
+  border-radius: 8px;
+  background: white !important;
+}
+
+/* Toolbar Buttons Appearance */
+.ql-toolbar.ql-snow button {
+  text-indent: 0 !important;
+  width: auto !important;
+  height: 34px !important;
+  padding: 0 14px !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-playfair), serif !important;
+  font-weight: bold !important;
+  border-radius: 8px !important;
+  border: 1px solid #D4AF37 !important;
+  color: #b07a7a !important;
+  background: white !important;
+  transition: all 0.2s ease !important;
+}
+
+.ql-toolbar button:hover {
+  background: #fff3d9 !important;
+  color: #8b5a2b !important;
+}
+
+/* Specific Emoji Icon Content */
+.ql-toolbar button.ql-undo::after { content: "↺"; font-size: 16px; }
+.ql-toolbar button.ql-redo::after { content: "↻"; font-size: 16px; }
+.ql-toolbar button.ql-bold::after { content: "B"; font-size: 16px; font-family: serif; }
+.ql-toolbar button.ql-image::after { content: "🖼"; font-size: 16px; }
+
+/* Boutique Color Buttons */
+.ql-toolbar button.ql-gold { color: #D4AF37 !important; }
+.ql-toolbar button.ql-pink { color: #C09090 !important; border-color: #C09090 !important; }
+.ql-toolbar button.ql-grey { color: #444444 !important; border-color: #444444 !important; }
+
+/* Main Editor Container */
+.ql-container.ql-snow {
+  border: 2px solid #D4AF37 !important;
+  border-radius: 0 0 12px 12px;
+  background: white;
+  min-height: 400px;
+}
+
+.ql-editor {
+  font-family: "Times New Roman", Georgia, serif;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #444444;
+  padding: 20px !important;
+}
+
+/* Font Class Mappings (Ensures fonts apply in editor) */
+.ql-editor .ql-font-playfair { font-family: var(--font-playfair), serif !important; }
+.ql-editor .ql-font-greatvibes { font-family: var(--font-great-vibes), cursive !important; }
+.ql-editor .ql-font-times { font-family: "Times New Roman", serif !important; }
+
+/* Size Class Mappings (Ensures sizes apply in editor) */
+.ql-editor .ql-size-1em { font-size: 1em !important; }
+.ql-editor .ql-size-1\.4em { font-size: 1.4em !important; }
+.ql-editor .ql-size-1\.8em { font-size: 1.8em !important; }
+
+/* ================================
+   SWIPER ARROWS — Antique Gold
+   ================================ */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #B8860B !important; /* Antique Gold */
+  --swiper-navigation-size: 34px; /* Thicker + larger arrows */
+  font-weight: 900; /* Makes arrow icon thicker */
+  text-shadow: 0 0 6px rgba(184, 134, 11, 0.4); /* Soft gold glow */
+}
+
+/* Hover effect for luxury feel */
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  color: #D4AF37 !important; /* Main Title Gold on hover */
+  transform: scale(1.1);
+  transition: 0.2s ease;
+}
+
+/* ================================
+   SWIPER PAGINATION DOTS — Bigger + Gold
+   ================================ */
+.swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  background: #B8860B !important; /* Antique Gold */
+  opacity: 0.4;
+  margin: 0 6px !important;
+  border-radius: 50%;
+}
+
+/* Active dot */
+.swiper-pagination-bullet-active {
+  background: #B8860B !important; /* Main Title Gold */
+  opacity: 1;
+  transform: scale(1.25);
 }

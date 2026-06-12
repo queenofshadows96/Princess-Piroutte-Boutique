@@ -6,10 +6,14 @@ import { Great_Vibes, Playfair_Display } from "next/font/google";
 import { ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 
-const magnolia = Great_Vibes({ subsets: ["latin"], weight: ["400"] });
+const magnolia = Great_Vibes({
+  subsets: ["latin"],
+  weight: ["400"], // ⭐ unified with layout
+});
+
 const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400"], // ⭐ unified with layout
   style: ["italic"],
 });
 
